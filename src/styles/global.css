@@ -45,6 +45,8 @@
   --color-line-soft: #1e1e21;
   --color-fg: #f4f3f0;
   --color-fg-mid: #a8a6a0;
+  /* fg-dim is 3.58:1 on --color-bg: AA for large text & UI, below 4.5:1 for
+     small labels. Kept verbatim per the locked palette (accepted deviation). */
   --color-fg-dim: #6b6963;
   --color-accent: #e8fe54;
   --color-accent-dim: #c5d946;
