@@ -1,0 +1,312 @@
+---
+import { Picture } from 'astro:assets';
+import BaseLayout from './BaseLayout.astro';
+import type { WorkEntry } from '../lib/work';
+import { disciplineOf } from '../lib/work';
+
+interface Props {
+  entry: WorkEntry;
+  next: WorkEntry | null;
+}
+
+const { entry, next } = Astro.props;
+const d = entry.data;
+const heroImg = d.hero ?? d.cover;
+const heroAlt = d.heroAlt ?? d.coverAlt;
+
+const meta = [
+  { label: 'Client', value: d.client },
+  { label: 'Role', value: d.role },
+  { label: 'Year', value: String(d.year) },
+  { label: 'Discipline', value: disciplineOf(entry) },
+];
+---
+
+<BaseLayout
+  title={`${d.title} · ${d.client}`}
+  description={d.outcome}
+  image={d.cover.src}
+  article={true}
+>
+  <article class="case">
+    <header class="case-head wrap">
+      <a href="/work" class="back rv" data-cursor>← All work</a>
+      <p class="case-eyebrow rv">{disciplineOf(entry)} · {d.year}</p>
+      <h1 class="case-title rv">{d.title}</h1>
+      <p class="case-outcome rv rv2">{d.outcome}</p>
+    </header>
+
+    <div class="case-hero wrap rv">
+      <Picture
+        src={heroImg}
+        alt={heroAlt}
+        formats={['avif', 'webp']}
+        widths={[640, 1024, 1440, 1920]}
+        sizes="(min-width: 1440px) 1440px, 100vw"
+        class="case-hero-img"
+        loading="eager"
+        fetchpriority="high"
+      />
+    </div>
+
+    <div class="wrap">
+      <dl class="metabar">
+        {
+          meta.map((m) => (
+            <div class="meta-cell">
+              <dt>{m.label}</dt>
+              <dd>{m.value}</dd>
+            </div>
+          ))
+        }
+        {
+          d.services && d.services.length > 0 && (
+            <div class="meta-cell meta-services">
+              <dt>Services</dt>
+              <dd>{d.services.join(', ')}</dd>
+            </div>
+          )
+        }
+      </dl>
+    </div>
+
+    <div class="prose">
+      <slot />
+    </div>
+
+    {
+      next && (
+        <a class="next" href={`/work/${next.id}`} data-cursor>
+          <div class="wrap next-inner">
+            <span class="next-label">Next project</span>
+            <span class="next-title">
+              {next.data.title} <span class="next-arrow">↗</span>
+            </span>
+            <span class="next-meta">
+              {disciplineOf(next)} · {next.data.year}
+            </span>
+          </div>
+        </a>
+      )
+    }
+  </article>
+</BaseLayout>
+
+<style>
+  .case {
+    padding-top: clamp(110px, 14vh, 180px);
+  }
+
+  /* ---- header ---- */
+  .case-head {
+    margin-bottom: clamp(40px, 5vw, 64px);
+  }
+  .back {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    color: var(--color-fg-dim);
+    margin-bottom: clamp(40px, 6vw, 72px);
+    transition: color 0.25s;
+  }
+  .back:hover {
+    color: var(--color-fg);
+  }
+  .case-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-accent-dim);
+    margin-bottom: 22px;
+  }
+  .case-title {
+    font-weight: 300;
+    letter-spacing: -0.04em;
+    line-height: 0.95;
+    font-size: clamp(40px, 7vw, 96px);
+    max-width: 14ch;
+  }
+  .case-outcome {
+    margin-top: clamp(24px, 3vw, 36px);
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    line-height: 1.3;
+    font-size: var(--text-lead);
+    color: var(--color-fg-mid);
+    max-width: 24ch;
+  }
+
+  /* ---- hero ---- */
+  .case-hero {
+    margin-bottom: clamp(32px, 4vw, 56px);
+  }
+  .case-hero-img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    border-radius: 16px;
+    border: 1px solid var(--color-line);
+    background: var(--color-surface);
+  }
+
+  /* ---- metadata bar ---- */
+  .metabar {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--color-line);
+    border: 1px solid var(--color-line);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: clamp(56px, 8vw, 110px);
+  }
+  .meta-cell {
+    background: var(--color-bg);
+    padding: 22px 24px;
+  }
+  .meta-services {
+    grid-column: span 4;
+  }
+  .meta-cell dt {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-fg-dim);
+    margin-bottom: 8px;
+  }
+  .meta-cell dd {
+    font-size: 15px;
+    color: var(--color-fg);
+    margin: 0;
+  }
+
+  /* ---- prose: content grid with break-out widths ---- */
+  .prose {
+    display: grid;
+    grid-template-columns:
+      [full-start] minmax(var(--g), 1fr)
+      [content-start] min(68ch, 100% - var(--g) * 2) [content-end]
+      minmax(var(--g), 1fr) [full-end];
+  }
+  .prose > :global(*) {
+    grid-column: content;
+  }
+  .prose > :global(.u-wide) {
+    grid-column: full;
+    width: min(1100px, 100% - var(--g) * 2);
+    margin-inline: auto;
+  }
+  .prose > :global(.u-bleed) {
+    grid-column: full;
+  }
+
+  /* prose typography */
+  .prose :global(p) {
+    font-size: 17px;
+    line-height: 1.75;
+    color: var(--color-fg-mid);
+    margin-block: 1.25em;
+  }
+  .prose :global(h2) {
+    font-weight: 300;
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+    font-size: clamp(26px, 3.4vw, 40px);
+    color: var(--color-fg);
+    margin-top: clamp(48px, 6vw, 80px);
+    margin-bottom: 0.4em;
+  }
+  .prose :global(h3) {
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    font-size: clamp(19px, 2vw, 24px);
+    color: var(--color-fg);
+    margin-top: 2em;
+    margin-bottom: 0.4em;
+  }
+  .prose :global(strong) {
+    color: var(--color-fg);
+    font-weight: 500;
+  }
+  .prose :global(a) {
+    color: var(--color-fg);
+    border-bottom: 1px solid var(--color-accent);
+    transition: color 0.25s;
+  }
+  .prose :global(a:hover) {
+    color: var(--color-accent);
+  }
+  .prose :global(ul),
+  .prose :global(ol) {
+    margin-block: 1.25em;
+    padding-left: 1.2em;
+    color: var(--color-fg-mid);
+  }
+  .prose :global(li) {
+    font-size: 17px;
+    line-height: 1.7;
+    margin-block: 0.5em;
+    padding-left: 0.3em;
+  }
+  .prose :global(li)::marker {
+    color: var(--color-accent-dim);
+  }
+
+  /* ---- next project ---- */
+  .next {
+    display: block;
+    margin-top: clamp(80px, 12vw, 160px);
+    border-top: 1px solid var(--color-line);
+    background: var(--color-bg-soft);
+    transition: background 0.4s;
+  }
+  .next:hover {
+    background: var(--color-surface);
+  }
+  .next-inner {
+    padding: clamp(48px, 7vw, 96px) var(--g);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .next-label {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-fg-dim);
+  }
+  .next-title {
+    font-weight: 300;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    font-size: clamp(34px, 6vw, 72px);
+    color: var(--color-fg);
+  }
+  .next-arrow {
+    color: var(--color-accent);
+    display: inline-block;
+    transition: transform 0.3s var(--ease-out-expo);
+  }
+  .next:hover .next-arrow {
+    transform: translate(6px, -6px);
+  }
+  .next-meta {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--color-fg-dim);
+  }
+
+  @media (max-width: 680px) {
+    .metabar {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .meta-services {
+      grid-column: span 2;
+    }
+  }
+</style>
