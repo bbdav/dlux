@@ -1,22 +1,72 @@
 ---
 title: 'MAI Social'
 client: 'MAI Social'
-role: 'Product Designer'
+role: 'Lead Product Designer'
 year: 2020
 category: 'Mobile'
 tags: 'Mobile · iOS'
-summary: 'End-to-end iOS product design. Discovery through prototype to a handoff with zero open questions.'
-outcome: 'Took an iOS social product from discovery to a developer handoff with zero open questions.'
-cover: '../../assets/work/mai-cover.png'
-coverAlt: 'The MAI Social iOS app interface.'
+summary: 'Designed the feed, profile, Circles, messaging and AI chat for an AI-powered social network.'
+outcome: 'Designed the core of an AI-powered social platform that went on to secure investor funding.'
+cover: '../../assets/work/mai-cover.jpg'
+coverAlt: 'MAI Social feed, filters and modes across three phone screens.'
+hero: '../../assets/work/mai-cover.jpg'
+heroAlt: 'MAI Social feed and filter screens on a purple gradient.'
 order: 3
 draft: false
 services:
-  - 'iOS product design'
+  - 'Product design'
+  - 'iOS'
   - 'Prototyping'
-  - 'Developer handoff'
+  - 'AI interaction'
 ---
 
-This case study is being written. The short version: MAI Social was an end-to-end iOS engagement, from discovery through interactive prototype to a developer handoff with zero open questions.
+import Figure from '../../components/mdx/Figure.astro';
+import Gallery from '../../components/mdx/Gallery.astro';
+import circles from '../../assets/work/mai-circles.jpg';
+import ai from '../../assets/work/mai-ai.jpg';
+import politics from '../../assets/work/mai-politics.jpg';
+import wireframes from '../../assets/work/mai-wireframes.jpg';
 
-A full write-up with process and screens is on the way.
+MAI Social set out to do social networking differently: a personalised feed, real tools for political engagement, and communities built around shared interests, with AI running underneath. I led the design of its core.
+
+## What we were building
+
+The goals were specific. A feed people could shape with their own filters. A politics space that surfaced genuinely relevant content. And Circles, a way to find and connect with people who care about the same things you do.
+
+<Figure
+  src={wireframes}
+  alt="A suite of wireframes covering MAI Social's main features."
+  caption="Wireframes first: structure and user preference before any surface design."
+  width="wide"
+/>
+
+## My role
+
+I was lead designer across the feed, profile, Circles, notifications, messaging, and the MAI AI chat, from first concept through prototyping and refinement. The feed leaned on small, deliberate motion to make browsing and filtering feel alive rather than mechanical. Profiles, notifications, and threaded messages were built for clarity over decoration.
+
+## Circles
+
+Circles connect people, so the design made that literal. A built-in map view lets members see each other geographically, which turns an abstract interest group into something closer to a real community.
+
+<Figure
+  src={circles}
+  alt="The Circles feature with a map view of member locations."
+  caption="Circles use a map view to ground online communities in real places."
+/>
+
+## AI and politics
+
+The MAI AI chat takes both text and voice, so it meets people however they prefer to communicate. MAI Politics went further: a dynamic quiz that captures a person's views, interactive maps, official profiles, AI-assisted browsing, and built-in fundraising tools.
+
+<Gallery
+  cols={2}
+  items={[
+    { src: ai, alt: 'The MAI AI chat interface supporting text and voice input.' },
+    { src: politics, alt: 'The MAI Politics quiz and engagement tools.' },
+  ]}
+  caption="Left: MAI AI chat. Right: the MAI Politics quiz and tools."
+/>
+
+## Outcome
+
+The platform secured investor funding and drove real engagement, carried by the personalised feed and the political tools. Through all of it the design held one line: powerful features, but always centred on the person using them.

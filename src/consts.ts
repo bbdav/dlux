@@ -85,6 +85,7 @@ export const CATEGORIES = [
   'Mobile',
   'IoT',
   'E-commerce',
+  'Web',
 ] as const;
 
 export type Category = (typeof CATEGORIES)[number];

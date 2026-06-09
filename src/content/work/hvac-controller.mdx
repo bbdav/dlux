@@ -1,22 +1,71 @@
 ---
 title: 'HVAC Controller'
-client: 'Industrial HVAC'
+client: 'Industrial HVAC Manufacturer'
 role: 'Product Designer'
-year: 2021
+year: 2020
 category: 'IoT'
 tags: 'IoT · Mobile'
-summary: 'On-device controller for industrial HVAC. Complex hardware controls made genuinely intuitive.'
-outcome: 'Designed an on-device controller that made complex industrial HVAC hardware genuinely intuitive.'
-cover: '../../assets/work/hvac-cover.png'
-coverAlt: 'The on-device HVAC controller interface.'
-order: 4
+summary: 'Designed first-of-its-kind IoT apps to control commercial air-curtain units from anywhere.'
+outcome: 'Shipped multi-platform IoT control for commercial HVAC and cut post-launch bounce rate.'
+cover: '../../assets/work/hvac-cover.jpg'
+coverAlt: 'The HVAC controller app: onboarding, unit list, and control screens.'
+hero: '../../assets/work/hvac-cover.jpg'
+heroAlt: 'Three HVAC controller app screens on a blue gradient.'
+order: 5
 draft: false
 services:
+  - 'Product design'
   - 'IoT / on-device UX'
-  - 'Interaction design'
-  - 'Hardware controls'
+  - 'User research'
+  - 'Prototyping'
 ---
 
-This case study is being written. The short version: an on-device controller for industrial HVAC equipment, where the goal was to make dense hardware controls feel genuinely intuitive under real operating conditions.
+import Figure from '../../components/mdx/Figure.astro';
+import Gallery from '../../components/mdx/Gallery.astro';
+import concepts from '../../assets/work/hvac-concepts.jpg';
+import flow from '../../assets/work/hvac-flow.jpg';
+import pairing from '../../assets/work/hvac-pairing.png';
+import persona from '../../assets/work/hvac-persona.jpg';
 
-A full write-up with process and screens is on the way.
+A commercial HVAC manufacturer wanted something that did not exist yet: cloud apps to control their air-curtain units remotely, across multiple sites, from both web and mobile. The challenge was making industrial hardware feel as simple as a thermostat.
+
+## Grounding it in research
+
+Before any screens, I ran surveys, interviews, and a competitive scan to find where operators actually struggle. The findings became a technology map, a shared blueprint that kept engineers and design aligned on what was realistic to build.
+
+<Figure
+  src={persona}
+  alt="A user persona synthesising the research findings."
+  caption="Research distilled into a persona, so every later decision had a person behind it."
+/>
+
+## Designing the flows
+
+Three flows carried the product. Onboarding had to make account setup feel like a welcome, not a hurdle. Unit pairing had to walk someone through connecting real hardware step by step. And the general flow had to make moving through the app obvious. Each one was built to take the guesswork out.
+
+<Figure
+  src={flow}
+  alt="Flow mapping for the app's core journeys."
+  caption="Mapping the journeys before the interface kept the structure honest."
+  width="wide"
+/>
+
+<Figure
+  src={pairing}
+  alt="The step-by-step unit pairing flow."
+  caption="Unit pairing, broken into steps that assume nothing about the operator."
+/>
+
+## From sketch to screen
+
+Early concepts and wireframes set the structure first, navigation and information architecture, before any visual polish. That kept the dense controls of industrial HVAC legible instead of intimidating.
+
+<Figure
+  src={concepts}
+  alt="Initial concepts for the controller interface."
+  caption="Initial concepts, focused on making complex controls feel approachable."
+/>
+
+## Outcome
+
+After launch the bounce rate dropped noticeably. Operators called out the streamlined navigation, the easier scanning, faster access to the units they needed, and a finish that finally matched the hardware it controlled.

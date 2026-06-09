@@ -5,18 +5,65 @@ role: 'Product Designer'
 year: 2023
 category: 'E-commerce'
 tags: 'E-commerce · B2C'
-summary: 'Reworked the buying flow for a high-volume tire retailer. Less friction, more completed carts.'
-outcome: 'Reworked the buying flow for a high-volume tire retailer, cutting friction and lifting completed carts.'
-cover: '../../assets/work/simpletire-cover.png'
-coverAlt: 'The SimpleTire e-commerce buying flow.'
-order: 5
+summary: 'Reworked a high-volume tire-buying flow to cut friction and lift conversion.'
+outcome: 'Redesigned the tire buying flow and lifted user engagement by 20% (per Toptal case study).'
+cover: '../../assets/work/simpletire-cover.jpg'
+coverAlt: 'The redesigned SimpleTire product page.'
+hero: '../../assets/work/simpletire-cover.jpg'
+heroAlt: 'SimpleTire product page with pricing, deals and cart on a desktop mockup.'
+order: 4
 draft: false
 services:
+  - 'Product design'
   - 'E-commerce UX'
-  - 'Checkout flow'
+  - 'Prototyping'
   - 'Conversion design'
 ---
 
-This case study is being written. The short version: SimpleTire sells tires at high volume, and the buying flow asked shoppers to make confident decisions about a complex product. I reworked it to remove friction and help more carts reach checkout.
+import Figure from '../../components/mdx/Figure.astro';
+import PullQuote from '../../components/mdx/PullQuote.astro';
+import Gallery from '../../components/mdx/Gallery.astro';
+import s1 from '../../assets/work/simpletire-1.jpg';
+import s2 from '../../assets/work/simpletire-2.jpg';
+import s3 from '../../assets/work/simpletire-3.jpg';
+import s4 from '../../assets/work/simpletire-4.jpg';
 
-A full write-up with process and screens is on the way.
+Buying tires online asks people to make a confident decision about a complex product they rarely think about. SimpleTire sells at high volume, so every bit of friction in that decision costs real carts. I reworked the flow to take the friction out.
+
+## The problem
+
+Tire selection was cumbersome, the design had aged, and conversions were sliding. The brief was to design new features, build prototypes worth testing, and lift the experience without losing the brand.
+
+## Research first
+
+I used both sides of the research toolkit: interviews, surveys, analytics, and usability testing. Together they showed where customers and stakeholders hit friction, and gave each design decision something real to stand on rather than a hunch.
+
+## Where the work landed
+
+Most of the gains came from the moments closest to the purchase:
+
+- **Product list and page** rebuilt around clearer layouts, real filtering, structured specs, reviews, and interactive galleries
+- **Offers and rebates** pulled into an accessible deals section with clear actions and personalised picks
+- **Product comparison** as a side-by-side tool for specs, pricing, and reviews, so the choice is informed
+- **Cart and installation** joined up, so buying tires and booking the appointment happen in one flow
+- **Helper prompts** offering contextual support, maintenance tips, and recommendations along the way
+
+<Gallery
+  cols={2}
+  items={[
+    { src: s1, alt: 'SimpleTire product discovery and filtering.' },
+    { src: s2, alt: 'SimpleTire deals and rebates section.' },
+    { src: s3, alt: 'SimpleTire product comparison tool.' },
+    { src: s4, alt: 'SimpleTire cart with installation scheduling.' },
+  ]}
+  caption="Discovery, deals, comparison, and a cart that books installation in the same flow."
+/>
+
+<PullQuote cite="Outcome · per published Toptal case study">
+  User engagement rose by 20 percent, alongside gains in conversion and
+  satisfaction.
+</PullQuote>
+
+## Outcome
+
+The reworked flow lifted user engagement by roughly 20 percent, with conversion and satisfaction moving up alongside it. The work was later featured in a published Toptal case study.

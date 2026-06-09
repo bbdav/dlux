@@ -1,0 +1,58 @@
+---
+title: 'Commenting System'
+client: 'Insticator'
+role: 'Product Designer'
+year: 2021
+category: 'SaaS'
+tags: 'Engagement · Ad Tech'
+summary: 'Redesigned a commenting engagement unit with new metrics and reactions to drive signups.'
+outcome: 'Rebuilt a commenting engagement unit around clearer metrics, cleaner reactions, and signups.'
+cover: '../../assets/work/commenting-cover.jpg'
+coverAlt: 'Design iterations of the commenting thread overview.'
+hero: '../../assets/work/commenting-cover.jpg'
+heroAlt: 'A spread of commenting thread overview design variations.'
+order: 6
+draft: false
+services:
+  - 'Product design'
+  - 'Interaction states'
+  - 'Design handoff'
+---
+
+import Figure from '../../components/mdx/Figure.astro';
+import Gallery from '../../components/mdx/Gallery.astro';
+import reactions from '../../assets/work/commenting-reactions.jpg';
+import states from '../../assets/work/commenting-states.jpg';
+
+A commenting unit only earns its place on a page if it pulls people in. This one had grown stale: a couple of basic counts and a generic emoji tray that did nothing for the brand. The redesign turned it into a reason to participate, and to sign up.
+
+## Reading the old unit
+
+The original let people post and read comments, but it surfaced almost nothing about the conversation. Comment count and active users, and not much else. The reactions were off-the-shelf emoji that carried no meaning back to the publisher.
+
+## An overview worth watching
+
+The new overview gives the thread a pulse. It shows total comments, how many people are active on the page, whether the thread is trending within a configurable window, thread views, and a single total-reactions number that rolls up upvotes, downvotes, replies, and emoji into one signal.
+
+<Figure
+  src={states}
+  alt="Documented interaction states for the commenting overview component."
+  caption="Every state, documented: hovers, clicks, and transitions, ready for build."
+  width="wide"
+/>
+
+The layout went through several rounds as requirements firmed up, landing on something compact and editorial. A Top Comment surfaces the highest-engagement reply, ranked by replies and refreshed hourly, with show-more to expand. Top Terms lists the five most-used words so readers can filter the thread by what people are actually talking about.
+
+## Reactions that mean something
+
+The biggest call was cutting a library of over a hundred emoji down to a focused set of emotion and vote options. Fewer, clearer choices did two things at once: they reduced the toxic edge that a giant emoji wall invites, and they produced clean, comparable data the publisher could actually benchmark.
+
+<Figure
+  src={reactions}
+  alt="The simplified reaction set and the all-reactions modal."
+  caption="A tighter reaction set: calmer for readers, and far more useful as data."
+/>
+
+## Outcome
+
+The redesign gave the unit something to differentiate on, standardised how engagement gets measured, trimmed the features no one used, and pointed the whole thing at one goal: turning a passing reader into a registered user, then handing engineering a clean component library to build it.

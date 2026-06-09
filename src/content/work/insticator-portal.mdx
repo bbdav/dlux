@@ -1,22 +1,77 @@
 ---
 title: 'Publisher Portal 2.0'
 client: 'Insticator'
-role: 'Senior Product Designer'
+role: 'UX Designer'
 year: 2021
 category: 'SaaS'
 tags: 'Dashboard · Ad Tech'
-summary: 'Rebuilt the core analytics and monetization dashboard. Sharply reduced time-to-insight.'
-outcome: 'Rebuilt the core analytics and monetization dashboard and sharply reduced time-to-insight.'
-cover: '../../assets/work/insticator-cover.png'
-coverAlt: 'The Insticator Publisher Portal 2.0 analytics dashboard.'
+summary: 'Rebuilt a publisher revenue dashboard so the numbers that matter are one glance away.'
+outcome: 'Reorganised a fragmented analytics portal into a clear, navigable revenue dashboard.'
+cover: '../../assets/work/insticator-cover.jpg'
+coverAlt: 'The redesigned Publisher Portal revenue overview.'
+hero: '../../assets/work/insticator-hero.jpg'
+heroAlt: 'Publisher Portal 2.0 revenue overview with charts and revenue drivers.'
 order: 2
 draft: false
 services:
-  - 'Product UX'
-  - 'Dashboard design'
+  - 'UX design'
+  - 'Information architecture'
   - 'Data visualization'
+  - 'Component library'
 ---
 
-This case study is being written. The short version: Insticator's publisher dashboard carried years of feature growth and had become hard to read at a glance. I rebuilt the core analytics and monetization views around the decisions publishers actually make, which sharply reduced time-to-insight.
+import Figure from '../../components/mdx/Figure.astro';
+import Gallery from '../../components/mdx/Gallery.astro';
+import nav from '../../assets/work/insticator-nav.jpg';
+import ia from '../../assets/work/insticator-ia.jpg';
+import reports from '../../assets/work/insticator-reports.jpg';
+import datepicker from '../../assets/work/insticator-datepicker.jpg';
 
-A full write-up with process and screens is on the way.
+Publishers came to the portal to answer one question: where is my revenue coming from? The old interface made that surprisingly hard. The redesign put the answer up front.
+
+## Where it broke down
+
+The data publishers needed most, revenue by content type, was scattered across a wall of cards. Anything beyond the surface meant leaving the main view, which broke their train of thought. The portal held the numbers but never told the story.
+
+The brief was to rebuild the navigation and the reports around how revenue actually works, while keeping the legacy production data reachable through the transition.
+
+## Moving the navigation
+
+Competitor analysis pointed to a clear pattern: the industry had moved toward drawer-style menus. I mapped a new information architecture so the team agreed on the menu before any pixels moved, then relocated navigation from the top to a vertical left sidebar that collapses to icons. That handed the right side of the screen back to the content.
+
+<Figure
+  src={ia}
+  alt="An information architecture map of the portal's new menu structure."
+  caption="A shared IA map aligned the team on structure before design began."
+/>
+
+<Figure
+  src={nav}
+  alt="The collapsed left navigation rail reduced to icons."
+  caption="Navigation moved left and collapses to icons, freeing space for the data."
+/>
+
+## Reading revenue at a glance
+
+Three compact cards sit at the top of every report, rolling revenue drivers up by day, week, month, and quarter. Below them, the reports do the heavy lifting: stacked bars for additive data, multi-line charts where metrics live in different units, and consistent Revenue, Unit Load RPM, and Unit Loads tabs so the layout never surprises you.
+
+<Figure
+  src={reports}
+  alt="A revenue report with stacked bar and multi-line charts."
+  caption="Reports share one layout, so moving between metrics costs no relearning."
+  width="wide"
+/>
+
+## The small things that get used most
+
+The date picker gets touched on nearly every visit, so it earned real attention. Presets like Yesterday and Last 7 days cover the common cases, and built-in comparison against the previous period or last year answers the next question before it is asked.
+
+<Figure
+  src={datepicker}
+  alt="The redesigned date picker with presets and comparison options."
+  caption="Presets and comparisons built into the picker, where the work actually happens."
+/>
+
+## Outcome
+
+The work shipped as more than screens: presentations to leadership, close coordination with engineering, and interviews with the team during the build. What landed was a professional, lightly playful portal backed by a reusable component library, where the path from question to answer is short.
