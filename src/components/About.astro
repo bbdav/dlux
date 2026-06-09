@@ -1,0 +1,134 @@
+---
+import Skills from './Skills.astro';
+---
+
+<section class="sec-pad" id="about">
+  <div class="wrap">
+    <div class="about-grid">
+      <div class="rv">
+        <p class="sec-tag about-tag">About</p>
+        <h2 class="about-lead">Twenty years of <em>doing the work</em> — not just talking about it.</h2>
+        <p class="about-p">
+          I started in HCI engineering at Technion and spent two decades building design systems from
+          scratch, shipping enterprise dashboards, and designing for iOS, IoT and SaaS.
+        </p>
+        <p class="about-p">
+          Right now I'm a <b>Senior Product Designer at OEC</b>, building collision repair tools. On
+          the side I'm designing <b>Contengine</b>, my own headless CMS. I take Toptal contract work
+          when the project is worth doing.
+        </p>
+        <a href="/about" class="about-cta" data-cursor>Read the full story →</a>
+      </div>
+
+      <div class="rv rv2">
+        <div class="toptal-card">
+          <div class="toptal-top">
+            <div class="toptal-pct">3%</div>
+            <p class="toptal-pl">Top talent<br />tier · Toptal<br />vetted</p>
+          </div>
+          <p class="toptal-txt">
+            Screened and ranked in the <b>top 3%</b> of design talent on Toptal — the network the
+            world's top companies use to hire senior designers.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <Skills />
+  </div>
+</section>
+
+<style>
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: clamp(40px, 7vw, 110px);
+    align-items: center;
+  }
+  .about-tag {
+    margin-bottom: 28px;
+  }
+  .about-lead {
+    font-weight: 300;
+    letter-spacing: -0.025em;
+    line-height: 1.14;
+    font-size: var(--text-lead);
+    margin-bottom: 36px;
+  }
+  .about-lead em {
+    font-style: italic;
+    color: var(--color-accent);
+  }
+  .about-p {
+    font-size: 16px;
+    color: var(--color-fg-mid);
+    line-height: 1.7;
+    margin-bottom: 20px;
+    max-width: 520px;
+  }
+  .about-p b {
+    color: var(--color-fg);
+    font-weight: 400;
+  }
+  .about-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 14px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--color-fg);
+    border-bottom: 1px solid var(--color-accent);
+    padding-bottom: 5px;
+    transition: gap 0.3s;
+  }
+  .about-cta:hover {
+    gap: 18px;
+  }
+
+  .toptal-card {
+    border: 1px solid var(--color-line);
+    border-radius: 16px;
+    padding: 34px;
+    background: linear-gradient(160deg, var(--color-bg-soft), var(--color-bg));
+  }
+  .toptal-top {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+  .toptal-pct {
+    font-weight: 300;
+    font-size: 60px;
+    letter-spacing: -0.03em;
+    line-height: 0.8;
+    color: var(--color-accent);
+  }
+  .toptal-pl {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    color: var(--color-fg-dim);
+    line-height: 1.4;
+    text-transform: uppercase;
+  }
+  .toptal-txt {
+    font-size: 15px;
+    color: var(--color-fg-mid);
+    line-height: 1.65;
+    border-top: 1px solid var(--color-line);
+    padding-top: 22px;
+  }
+  .toptal-txt b {
+    color: var(--color-fg);
+    font-weight: 400;
+  }
+
+  @media (max-width: 1024px) {
+    .about-grid {
+      grid-template-columns: 1fr;
+      gap: 48px;
+    }
+  }
+</style>

@@ -1,0 +1,99 @@
+---
+title: 'Headless CMS Redesign'
+client: 'Agility CMS'
+role: 'Lead Product Designer'
+year: 2022
+category: 'Design System'
+tags: 'Design System · SaaS'
+summary: 'Built Plenum from zero. Unified the product and cut design-to-dev handoff friction in half.'
+outcome: 'Unified a sprawling headless CMS under one design system and halved design-to-dev handoff friction.'
+cover: '../../assets/work/agility-cover.png'
+coverAlt: 'The Plenum design system component library on a dark canvas.'
+hero: '../../assets/work/agility-hero.png'
+heroAlt: 'Plenum design system overview for Agility CMS, 2022.'
+order: 1
+draft: false
+services:
+  - 'Design system'
+  - 'Component library'
+  - 'Design tokens'
+  - 'Product UI redesign'
+  - 'Documentation'
+---
+
+import Figure from '../../components/mdx/Figure.astro';
+import PullQuote from '../../components/mdx/PullQuote.astro';
+import TwoColumn from '../../components/mdx/TwoColumn.astro';
+import Gallery from '../../components/mdx/Gallery.astro';
+import components from '../../assets/work/agility-components.png';
+import tokens from '../../assets/work/agility-tokens.png';
+import editor from '../../assets/work/agility-editor.png';
+import docs from '../../assets/work/agility-docs.png';
+
+Agility CMS had grown the way most successful products do. Features shipped fast, teams worked in parallel, and over a few years the interface drifted. Buttons came in a dozen subtly different shapes. The same action looked different on every screen. Engineers rebuilt the same patterns over and over because there was nowhere to find the canonical version.
+
+I joined to fix the root cause, not the symptoms. That meant a single design system, built from zero, that the whole product could stand on.
+
+## The problem underneath the problem
+
+The visible issue was inconsistency. The real issue was that design and engineering had no shared language. A handoff meant redlines, screenshots, and a long thread of clarifying questions. By the time a feature shipped, it had drifted again.
+
+<Figure
+  src={components}
+  alt="A grid of Plenum components: buttons, inputs, tables, and navigation in multiple states."
+  caption="Plenum component library — every pattern in one place, every state accounted for."
+  width="wide"
+/>
+
+So I scoped the work around one outcome that mattered to everyone: shorten the distance between a design decision and working code.
+
+## A system, not a sticker sheet
+
+A design system is only as good as the decisions baked into it. I started with tokens, because tokens are the contract. Color, type, spacing, radius, and motion all resolved to named values that design and code referenced identically.
+
+<TwoColumn>
+  <Fragment slot="left">
+    **Design side.** Tokens lived in the Figma library as variables. A designer never picked a raw hex value again. They chose a semantic token, and the system kept everything coherent.
+  </Fragment>
+  <Fragment slot="right">
+    **Engineering side.** The same tokens compiled to CSS custom properties. When a value changed, it changed in one place and propagated everywhere, with no hunting through stylesheets.
+  </Fragment>
+</TwoColumn>
+
+<Figure
+  src={tokens}
+  alt="The Plenum token architecture, mapping primitive values to semantic roles."
+  caption="Token architecture — primitives map to semantic roles, so intent survives the handoff."
+/>
+
+On top of the tokens sat the components. Each one shipped with its anatomy, its states, its accessibility behavior, and a usage note explaining when not to use it. The last part matters more than people expect. A system that only says yes grows into the same mess it replaced.
+
+<PullQuote cite="Harmonie Poirier · Head of Marketing, Agility CMS">
+  He led UI redesigns, established a unified design system, and improved brand
+  consistency across the board.
+</PullQuote>
+
+## Redrawing the product on top of it
+
+With the foundation in place, I rebuilt the core product surfaces. The content editor was the highest-traffic screen, so it went first. The brief was simple to say and hard to do: make a deeply flexible tool feel calm.
+
+<Gallery
+  cols={2}
+  items={[
+    { src: editor, alt: 'The redesigned Plenum content editor with a focused writing surface.' },
+    { src: docs, alt: 'The Plenum documentation site showing component guidelines.' },
+  ]}
+  caption="Left: the rebuilt content editor. Right: the living documentation site."
+/>
+
+### What changed in practice
+
+- One button, one input, one table. Defined once, used everywhere.
+- Documentation that lived next to the code, so it stayed true.
+- A review process where design and engineering spoke the same vocabulary.
+
+The result was less back and forth. Handoff stopped being a translation step and started being a reference. Design-to-dev friction dropped by roughly half, and the brand finally read as one product instead of ten.
+
+## What I would carry forward
+
+The system worked because it was opinionated and documented, not because it was large. The smallest, most boring decisions, naming a token well, writing one clear usage note, are the ones that compounded. That is the part I take into every project since.

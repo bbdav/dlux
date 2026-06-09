@@ -1,0 +1,72 @@
+---
+import { SITE } from '../consts';
+---
+
+<section class="cta" id="contact">
+  <div class="wrap">
+    <p class="cta-tag rv">Open to new opportunities</p>
+    <h2 class="cta-h rv rv2">Let's build<br />something <em>real</em>.</h2>
+    <a href={`mailto:${SITE.email}`} class="cta-mail rv rv3" data-cursor>
+      <span>{SITE.email}</span>
+    </a>
+  </div>
+</section>
+
+<style>
+  .cta {
+    padding: clamp(90px, 13vw, 200px) 0;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta::before {
+    content: '';
+    position: absolute;
+    width: 140%;
+    height: 140%;
+    top: -20%;
+    left: -20%;
+    background: radial-gradient(circle at 50% 40%, rgba(232, 254, 84, 0.07), transparent 45%);
+    pointer-events: none;
+  }
+  .cta-tag {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-accent-dim);
+    margin-bottom: 26px;
+    position: relative;
+  }
+  .cta-h {
+    font-weight: 300;
+    letter-spacing: -0.04em;
+    line-height: 0.95;
+    font-size: var(--text-cta);
+    margin-bottom: 42px;
+    position: relative;
+  }
+  .cta-h em {
+    font-style: italic;
+    color: var(--color-accent);
+  }
+  .cta-mail {
+    position: relative;
+    display: inline-block;
+    font-size: clamp(18px, 2vw, 26px);
+    font-weight: 300;
+    color: var(--color-fg);
+    letter-spacing: -0.01em;
+  }
+  .cta-mail span {
+    border-bottom: 1px solid var(--color-fg-dim);
+    padding-bottom: 6px;
+    transition:
+      border-color 0.3s,
+      color 0.3s;
+  }
+  .cta-mail:hover span {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+  }
+</style>

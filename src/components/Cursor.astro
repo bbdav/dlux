@@ -1,0 +1,92 @@
+---
+// Custom lime cursor. Lerps toward the pointer and swells over [data-cursor]
+// elements. Fully disabled on touch devices and when reduced-motion is set.
+---
+
+<div class="cursor" id="cursor" aria-hidden="true"></div>
+
+<style>
+  .cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 8px;
+    height: 8px;
+    background: var(--color-accent);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9500;
+    transform: translate(-50%, -50%);
+    transition:
+      width 0.3s,
+      height 0.3s,
+      opacity 0.3s;
+    mix-blend-mode: difference;
+    opacity: 0;
+  }
+  .cursor.ready {
+    opacity: 1;
+  }
+  .cursor.big {
+    width: 64px;
+    height: 64px;
+    background: rgba(232, 254, 84, 0.15);
+    backdrop-filter: invert(1);
+  }
+
+  /* No custom cursor on touch / coarse pointers */
+  @media (hover: none), (pointer: coarse) {
+    .cursor {
+      display: none;
+    }
+  }
+  /* No custom cursor when motion is reduced — restore the system cursor */
+  @media (prefers-reduced-motion: reduce) {
+    .cursor {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  const cursor = document.getElementById('cursor');
+
+  if (cursor && fine && !reduce) {
+    let cx = innerWidth / 2;
+    let cy = innerHeight / 2;
+    let tx = cx;
+    let ty = cy;
+    let started = false;
+
+    addEventListener(
+      'mousemove',
+      (e) => {
+        tx = e.clientX;
+        ty = e.clientY;
+        if (!started) {
+          started = true;
+          cursor.classList.add('ready');
+        }
+      },
+      { passive: true }
+    );
+
+    const loop = () => {
+      cx += (tx - cx) * 0.18;
+      cy += (ty - cy) * 0.18;
+      cursor.style.transform = `translate(${cx}px, ${cy}px) translate(-50%, -50%)`;
+      requestAnimationFrame(loop);
+    };
+    requestAnimationFrame(loop);
+
+    // Swell over interactive elements. Delegated so it covers dynamic nodes.
+    document.addEventListener('mouseover', (e) => {
+      if ((e.target as HTMLElement).closest('[data-cursor]')) cursor.classList.add('big');
+    });
+    document.addEventListener('mouseout', (e) => {
+      if ((e.target as HTMLElement).closest('[data-cursor]')) cursor.classList.remove('big');
+    });
+  }
+</script>

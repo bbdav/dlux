@@ -1,0 +1,193 @@
+---
+// Oversized masked headline. Animation is pure CSS and is neutralised by the
+// global prefers-reduced-motion rule (content stays visible).
+---
+
+<header class="hero wrap">
+  <div class="hero-top">
+    <p class="hero-status">
+      <span class="status-dot" aria-hidden="true"></span> Available for senior &amp; contract roles
+    </p>
+    <h1 class="hero-h1">
+      <span class="ln"><span>I design systems</span></span>
+      <span class="ln"><span>that <em>hold up</em>.</span></span>
+    </h1>
+  </div>
+  <div class="hero-bottom">
+    <p class="hero-lede">
+      <b>David Babijaev</b> — senior product designer, 20+ years turning complex software into
+      products people actually understand. SaaS, enterprise, design systems.
+    </p>
+    <p class="hero-scroll" aria-hidden="true">
+      <span class="bar"></span> Scroll to explore
+    </p>
+  </div>
+</header>
+
+<style>
+  .hero {
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-top: 120px;
+    padding-bottom: 48px;
+    position: relative;
+  }
+  .hero-top {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .hero-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    color: var(--color-fg-mid);
+    margin-bottom: 40px;
+    width: fit-content;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: rise 0.9s 0.2s var(--ease-out-expo) forwards;
+  }
+  .status-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--color-accent);
+    box-shadow: 0 0 0 0 var(--color-accent);
+    animation: ping 2.6s infinite;
+  }
+  @keyframes ping {
+    0% {
+      box-shadow: 0 0 0 0 rgba(232, 254, 84, 0.5);
+    }
+    70% {
+      box-shadow: 0 0 0 7px rgba(232, 254, 84, 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(232, 254, 84, 0);
+    }
+  }
+
+  .hero-h1 {
+    font-weight: 300;
+    letter-spacing: -0.045em;
+    line-height: 0.92;
+    font-size: var(--text-hero);
+  }
+  .hero-h1 .ln {
+    display: block;
+    overflow: hidden;
+  }
+  .hero-h1 .ln span {
+    display: block;
+    transform: translateY(105%);
+    animation: rise 0.95s var(--ease-out-expo) forwards;
+  }
+  .hero-h1 .ln:nth-child(1) span {
+    animation-delay: 0.28s;
+  }
+  .hero-h1 .ln:nth-child(2) span {
+    animation-delay: 0.4s;
+  }
+  .hero-h1 em {
+    font-style: italic;
+    font-weight: 300;
+    color: var(--color-accent);
+  }
+  @keyframes rise {
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  .hero-bottom {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 40px;
+    opacity: 0;
+    animation: fade 1s 0.9s ease forwards;
+  }
+  @keyframes fade {
+    to {
+      opacity: 1;
+    }
+  }
+  .hero-lede {
+    font-size: var(--text-lede);
+    font-weight: 300;
+    color: var(--color-fg-mid);
+    max-width: 440px;
+    line-height: 1.55;
+  }
+  .hero-lede b {
+    color: var(--color-fg);
+    font-weight: 400;
+  }
+  .hero-scroll {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: var(--color-fg-dim);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    white-space: nowrap;
+  }
+  .hero-scroll .bar {
+    width: 1px;
+    height: 34px;
+    background: linear-gradient(var(--color-fg-dim), transparent);
+    animation: scrolldot 2s ease-in-out infinite;
+  }
+  @keyframes scrolldot {
+    0%,
+    100% {
+      transform: scaleY(0.4);
+      transform-origin: top;
+    }
+    50% {
+      transform: scaleY(1);
+      transform-origin: top;
+    }
+  }
+
+  @media (max-width: 680px) {
+    .hero {
+      padding-top: 96px;
+    }
+    .hero-bottom {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 28px;
+    }
+    .hero-scroll {
+      display: none;
+    }
+  }
+
+  /* Reduced motion: reveal everything immediately, no mask transform */
+  @media (prefers-reduced-motion: reduce) {
+    .hero-status,
+    .hero-bottom {
+      opacity: 1;
+      transform: none;
+      animation: none;
+    }
+    .hero-h1 .ln span {
+      transform: none;
+      animation: none;
+    }
+    .status-dot,
+    .hero-scroll .bar {
+      animation: none;
+    }
+  }
+</style>

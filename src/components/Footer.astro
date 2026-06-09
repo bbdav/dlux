@@ -1,0 +1,76 @@
+---
+import { SOCIALS } from '../consts';
+const year = new Date().getFullYear();
+---
+
+<footer>
+  <div class="wrap foot">
+    <a href="/" class="logo" aria-label="dlux — home">d<b>.</b>lux</a>
+    <ul class="foot-links">
+      {
+        SOCIALS.map((s) => (
+          <li>
+            <a
+              href={s.href}
+              data-cursor
+              {...s.href.startsWith('http')
+                ? { target: '_blank', rel: 'noopener noreferrer' }
+                : {}}
+            >
+              {s.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+    <p class="foot-copy">© {year} David Babijaev · Bradford, ON</p>
+  </div>
+</footer>
+
+<style>
+  footer {
+    border-top: 1px solid var(--color-line);
+    padding: 48px 0;
+  }
+  .foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .logo {
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 19px;
+    letter-spacing: -0.02em;
+    color: var(--color-fg);
+  }
+  .foot-links {
+    display: flex;
+    gap: 28px;
+    list-style: none;
+  }
+  .foot-links a {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--color-fg-dim);
+    transition: color 0.25s;
+  }
+  .foot-links a:hover {
+    color: var(--color-fg);
+  }
+  .foot-copy {
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    color: var(--color-fg-dim);
+  }
+
+  @media (max-width: 680px) {
+    .foot {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 20px;
+    }
+  }
+</style>

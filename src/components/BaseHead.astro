@@ -1,0 +1,76 @@
+---
+import { SITE } from '../consts';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  /** Path or imported image for OG/Twitter card. */
+  image?: string;
+  /** Marks the page as an article for OG (case studies). */
+  article?: boolean;
+}
+
+const {
+  title,
+  description = SITE.description,
+  image = SITE.ogImage,
+  article = false,
+} = Astro.props;
+
+const pageTitle = SITE.titleTemplate(title);
+const canonical = new URL(Astro.url.pathname, Astro.site ?? SITE.domain).href;
+const ogImage = new URL(image, Astro.site ?? SITE.domain).href;
+---
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="generator" content={Astro.generator} />
+
+<title>{pageTitle}</title>
+<meta name="description" content={description} />
+<meta name="author" content={SITE.author} />
+<link rel="canonical" href={canonical} />
+
+<!-- Theme / browser chrome -->
+<meta name="theme-color" content="#0B0B0C" />
+<meta name="color-scheme" content="dark" />
+
+<!-- Favicons -->
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="icon" href="/favicon.ico" sizes="32x32" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+
+<!-- Preload the two critical fonts (latin) to avoid FOIT/CLS -->
+<link
+  rel="preload"
+  href="/fonts/inter-latin-wght-normal.woff2"
+  as="font"
+  type="font/woff2"
+  crossorigin
+/>
+<link
+  rel="preload"
+  href="/fonts/dm-mono-latin-400-normal.woff2"
+  as="font"
+  type="font/woff2"
+  crossorigin
+/>
+
+<!-- Open Graph -->
+<meta property="og:type" content={article ? 'article' : 'website'} />
+<meta property="og:site_name" content="dlux.ca" />
+<meta property="og:title" content={pageTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:image" content={ogImage} />
+<meta property="og:locale" content={SITE.locale} />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={pageTitle} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImage} />
+
+<link rel="sitemap" href="/sitemap-index.xml" />

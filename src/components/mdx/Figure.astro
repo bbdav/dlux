@@ -1,0 +1,56 @@
+---
+import { Picture } from 'astro:assets';
+
+interface Props {
+  src: ImageMetadata;
+  alt: string;
+  caption?: string;
+  /** Layout width within the case-study grid. */
+  width?: 'content' | 'wide' | 'bleed';
+}
+
+const { src, alt, caption, width = 'content' } = Astro.props;
+const cls = width === 'wide' ? 'u-wide' : width === 'bleed' ? 'u-bleed' : '';
+---
+
+<figure class:list={['fig', cls]}>
+  <Picture
+    src={src}
+    alt={alt}
+    formats={['avif', 'webp']}
+    widths={[480, 768, 1200, 1600]}
+    sizes={width === 'bleed'
+      ? '100vw'
+      : width === 'wide'
+        ? '(min-width: 1100px) 1100px, 100vw'
+        : '(min-width: 720px) 68ch, 100vw'}
+    class="fig-img"
+  />
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>
+
+<style>
+  .fig {
+    margin-block: clamp(32px, 5vw, 64px);
+  }
+  .fig-img {
+    width: 100%;
+    height: auto;
+    border-radius: 14px;
+    border: 1px solid var(--color-line);
+    background: var(--color-surface);
+  }
+  .u-bleed .fig-img {
+    border-radius: 0;
+    border-left: 0;
+    border-right: 0;
+  }
+  figcaption {
+    margin-top: 14px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.03em;
+    color: var(--color-fg-dim);
+    text-align: center;
+  }
+</style>

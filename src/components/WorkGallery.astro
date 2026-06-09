@@ -1,0 +1,325 @@
+---
+import { Picture } from 'astro:assets';
+import { getWork, disciplineOf } from '../lib/work';
+
+const projects = await getWork();
+---
+
+<section class="sec-pad" id="work">
+  <div class="wrap">
+    <div class="work-intro rv">
+      <div>
+        <p class="sec-tag">Selected work</p>
+        <h2 class="sec-title work-title">Things I've <em>shipped</em></h2>
+      </div>
+      <p class="drag-hint" aria-hidden="true">
+        <svg viewBox="0 0 30 14" fill="none" width="30" height="14">
+          <path
+            d="M1 7h28M24 2l5 5-5 5M6 2 1 7l5 5"
+            stroke="currentColor"
+            stroke-width="1.2"></path>
+        </svg>
+        Drag to explore
+      </p>
+    </div>
+  </div>
+
+  <div
+    class="gallery-vp"
+    id="work-vp"
+    tabindex="0"
+    role="region"
+    aria-label="Selected work. Use the left and right arrow keys to scroll."
+  >
+    <ul class="gallery-track" id="work-track">
+      {
+        projects.map((p, i) => (
+          <li class="proj-item">
+            <a class="proj" href={`/work/${p.id}`} data-cursor>
+              <div class="proj-media">
+                <span class="proj-num" aria-hidden="true">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                <span class="proj-arrow" aria-hidden="true">↗</span>
+                <Picture
+                  src={p.data.cover}
+                  alt={p.data.coverAlt}
+                  formats={['avif', 'webp']}
+                  widths={[320, 480, 600]}
+                  sizes="(min-width: 681px) 38vw, 78vw"
+                  class="proj-img"
+                />
+              </div>
+              <div class="proj-meta">
+                <span class="proj-name">{p.data.title}</span>
+                <span class="proj-cat">
+                  {disciplineOf(p)}
+                  <br />
+                  {p.data.year}
+                </span>
+              </div>
+              <p class="proj-desc">{p.data.summary}</p>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .work-intro {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 30px;
+    margin-bottom: 48px;
+  }
+  .work-title {
+    margin-top: 18px;
+  }
+  .drag-hint {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: var(--color-fg-dim);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-transform: uppercase;
+  }
+
+  .gallery-vp {
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 4px var(--g) 8px; /* top/bottom room for focus ring */
+    cursor: grab;
+    scrollbar-width: none; /* Firefox */
+    scroll-padding-left: var(--g);
+  }
+  .gallery-vp::-webkit-scrollbar {
+    display: none;
+  }
+  .gallery-vp.dragging {
+    cursor: grabbing;
+    scroll-behavior: auto;
+  }
+  .gallery-vp:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: -2px;
+  }
+
+  .gallery-track {
+    display: flex;
+    gap: 24px;
+    width: max-content;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .proj-item {
+    flex: 0 0 auto;
+  }
+  .proj {
+    display: block;
+    position: relative;
+    width: clamp(280px, 38vw, 540px);
+  }
+  .gallery-vp:not(.dragging) .proj {
+    scroll-snap-align: start;
+  }
+
+  .proj-media {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    border-radius: 14px;
+    overflow: hidden;
+    background: var(--color-surface);
+    border: 1px solid var(--color-line);
+  }
+  .proj-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.8s var(--ease-out-expo);
+  }
+  .proj:hover .proj-img,
+  .proj:focus-visible .proj-img {
+    transform: scale(1.05);
+  }
+  .proj-num {
+    position: absolute;
+    top: 16px;
+    left: 18px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--color-fg-mid);
+    z-index: 2;
+    mix-blend-mode: difference;
+  }
+  .proj-arrow {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: var(--color-accent);
+    color: var(--color-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transform: scale(0.7) rotate(-30deg);
+    transition:
+      opacity 0.4s,
+      transform 0.4s;
+    z-index: 2;
+    font-size: 16px;
+  }
+  .proj:hover .proj-arrow,
+  .proj:focus-visible .proj-arrow {
+    opacity: 1;
+    transform: scale(1) rotate(0);
+  }
+  .proj-meta {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: 18px;
+  }
+  .proj-name {
+    font-size: var(--text-project);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    color: var(--color-fg);
+  }
+  .proj-cat {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--color-fg-dim);
+    letter-spacing: 0.03em;
+    text-align: right;
+    white-space: nowrap;
+  }
+  .proj-desc {
+    font-size: 14px;
+    color: var(--color-fg-mid);
+    margin-top: 8px;
+    line-height: 1.55;
+    max-width: 90%;
+  }
+
+  @media (max-width: 680px) {
+    .work-intro {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 14px;
+    }
+    .drag-hint {
+      display: none;
+    }
+    .proj {
+      width: 78vw;
+    }
+  }
+  @media (hover: none), (pointer: coarse) {
+    .gallery-vp {
+      cursor: auto;
+    }
+  }
+</style>
+
+<script>
+  const vp = document.getElementById('work-vp');
+  if (vp) {
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    /* ---- mouse drag-to-scroll with momentum (touch uses native scroll) ---- */
+    let down = false;
+    let moved = false;
+    let startX = 0;
+    let startScroll = 0;
+    let lastX = 0;
+    let vel = 0;
+    let raf = 0;
+
+    const momentum = () => {
+      vel *= 0.93;
+      vp.scrollLeft -= vel;
+      if (Math.abs(vel) > 0.4 && vp.scrollLeft > 0 && vp.scrollLeft < vp.scrollWidth - vp.clientWidth) {
+        raf = requestAnimationFrame(momentum);
+      }
+    };
+
+    vp.addEventListener('pointerdown', (e) => {
+      if (e.pointerType !== 'mouse') return; // let touch/pen scroll natively
+      down = true;
+      moved = false;
+      startX = lastX = e.clientX;
+      startScroll = vp.scrollLeft;
+      vel = 0;
+      cancelAnimationFrame(raf);
+      vp.classList.add('dragging');
+      vp.setPointerCapture(e.pointerId);
+    });
+
+    vp.addEventListener('pointermove', (e) => {
+      if (!down) return;
+      const dx = e.clientX - startX;
+      if (Math.abs(dx) > 4) moved = true;
+      vp.scrollLeft = startScroll - dx;
+      vel = e.clientX - lastX;
+      lastX = e.clientX;
+    });
+
+    const release = (e: PointerEvent) => {
+      if (!down) return;
+      down = false;
+      vp.classList.remove('dragging');
+      try {
+        vp.releasePointerCapture(e.pointerId);
+      } catch {}
+      if (!reduce && Math.abs(vel) > 1) raf = requestAnimationFrame(momentum);
+    };
+    vp.addEventListener('pointerup', release);
+    vp.addEventListener('pointercancel', release);
+
+    /* suppress the click that follows a real drag */
+    vp.addEventListener(
+      'click',
+      (e) => {
+        if (moved) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+      },
+      true
+    );
+
+    /* ---- keyboard: arrow keys scroll the rail ---- */
+    vp.addEventListener('keydown', (e) => {
+      const card = vp.querySelector<HTMLElement>('.proj');
+      const step = card ? card.offsetWidth + 24 : 320;
+      const behavior: ScrollBehavior = reduce ? 'auto' : 'smooth';
+      if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        vp.scrollBy({ left: step, behavior });
+      } else if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        vp.scrollBy({ left: -step, behavior });
+      } else if (e.key === 'Home') {
+        e.preventDefault();
+        vp.scrollTo({ left: 0, behavior });
+      } else if (e.key === 'End') {
+        e.preventDefault();
+        vp.scrollTo({ left: vp.scrollWidth, behavior });
+      }
+    });
+  }
+</script>

@@ -1,0 +1,14 @@
+{
+  "name": "David Babijaev — Senior Product Designer",
+  "short_name": "dlux",
+  "description": "Portfolio of David Babijaev, senior product designer.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0B0B0C",
+  "theme_color": "#0B0B0C",
+  "icons": [
+    { "src": "/favicon.svg", "type": "image/svg+xml", "sizes": "any" },
+    { "src": "/android-chrome-192.png", "type": "image/png", "sizes": "192x192" },
+    { "src": "/android-chrome-512.png", "type": "image/png", "sizes": "512x512" }
+  ]
+}

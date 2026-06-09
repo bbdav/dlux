@@ -1,0 +1,87 @@
+---
+const stats = [
+  { n: '20', em: '+', label: 'Years designing<br>products' },
+  { n: '7', em: '', label: 'Industries from<br>FinTech to IoT' },
+  { n: '50', em: '%', label: 'Workflow efficiency<br>gains delivered' },
+  { n: '3', em: '%', label: 'Top talent tier,<br>vetted by Toptal' },
+];
+---
+
+<div class="cred">
+  <div class="wrap">
+    <dl class="cred-grid">
+      {
+        stats.map((s) => (
+          <div class="cred-cell">
+            <dd class="cred-n">
+              {s.n}
+              {s.em && <em>{s.em}</em>}
+            </dd>
+            <dt class="cred-l" set:html={s.label} />
+          </div>
+        ))
+      }
+    </dl>
+  </div>
+</div>
+
+<style>
+  .cred {
+    border-top: 1px solid var(--color-line);
+    border-bottom: 1px solid var(--color-line);
+  }
+  .cred-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    margin: 0;
+  }
+  .cred-cell {
+    padding: clamp(36px, 5vw, 64px) clamp(20px, 3vw, 40px);
+    border-left: 1px solid var(--color-line);
+  }
+  .cred-cell:first-child {
+    border-left: none;
+  }
+  .cred-n {
+    font-weight: 300;
+    letter-spacing: -0.03em;
+    font-size: var(--text-cred);
+    line-height: 1;
+    margin: 0 0 14px;
+  }
+  .cred-n em {
+    font-style: normal;
+    color: var(--color-accent);
+  }
+  .cred-l {
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    letter-spacing: 0.04em;
+    color: var(--color-fg-dim);
+    line-height: 1.5;
+  }
+
+  @media (max-width: 1024px) {
+    .cred-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .cred-cell:nth-child(odd) {
+      border-left: none;
+    }
+    .cred-cell:nth-child(3),
+    .cred-cell:nth-child(4) {
+      border-top: 1px solid var(--color-line);
+    }
+  }
+  @media (max-width: 680px) {
+    .cred-grid {
+      grid-template-columns: 1fr;
+    }
+    .cred-cell {
+      border-left: none;
+    }
+    .cred-cell + .cred-cell {
+      border-top: 1px solid var(--color-line);
+    }
+  }
+</style>

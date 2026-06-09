@@ -1,0 +1,56 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import Cursor from '../components/Cursor.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  article?: boolean;
+  /** Hide the shared footer (e.g. 404). */
+  hideFooter?: boolean;
+}
+
+const { title, description, image, article, hideFooter = false } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title={title} description={description} image={image} article={article} />
+  </head>
+  <body>
+    <a href="#main" class="skip-link">Skip to content</a>
+    <Cursor />
+    <Nav />
+    <main id="main">
+      <slot />
+    </main>
+    {!hideFooter && <Footer />}
+
+    <!-- Shared scroll-reveal observer (vanilla, reduced-motion aware) -->
+    <script>
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const items = document.querySelectorAll<HTMLElement>('.rv');
+
+      if (reduce || !('IntersectionObserver' in window)) {
+        items.forEach((el) => el.classList.add('in'));
+      } else {
+        const io = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('in');
+                io.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.12, rootMargin: '0px 0px -60px 0px' }
+        );
+        items.forEach((el) => io.observe(el));
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,241 @@
+---
+import { NAV_LINKS, SITE } from '../consts';
+
+// Active-state detection (ignore mailto/external links).
+const path = Astro.url.pathname;
+const isActive = (href: string) =>
+  href.startsWith('/') && (href === '/' ? path === '/' : path.startsWith(href));
+---
+
+<nav aria-label="Primary">
+  <a href="/" class="logo" aria-label="dlux — home">d<b>.</b>lux</a>
+
+  <div class="nav-r">
+    <ul class="nav-links">
+      {
+        NAV_LINKS.filter((l) => l.href.startsWith('/')).map((l) => (
+          <li>
+            <a href={l.href} aria-current={isActive(l.href) ? 'page' : undefined}>
+              {l.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <a href={`mailto:${SITE.email}`} class="nav-cta" data-cursor>Get in touch</a>
+
+    <button
+      type="button"
+      class="nav-burger"
+      id="nav-burger"
+      aria-label="Open menu"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+    >
+      <span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Full-screen mobile overlay -->
+<div class="mobile-menu" id="mobile-menu" hidden>
+  <ul class="mobile-links">
+    {
+      NAV_LINKS.map((l) => (
+        <li>
+          <a
+            href={l.href}
+            aria-current={isActive(l.href) ? 'page' : undefined}
+            {...l.href.startsWith('http')
+              ? { target: '_blank', rel: 'noopener noreferrer' }
+              : {}}
+          >
+            {l.label}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+  <a href={`mailto:${SITE.email}`} class="mobile-mail">{SITE.email}</a>
+</div>
+
+<style>
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: 24px var(--g);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    mix-blend-mode: difference;
+  }
+  .logo {
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 19px;
+    letter-spacing: -0.02em;
+    color: #fff;
+  }
+  .nav-r {
+    display: flex;
+    align-items: center;
+    gap: 36px;
+  }
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+  .nav-links a {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.02em;
+    color: #fff;
+    opacity: 0.75;
+    transition: opacity 0.25s;
+  }
+  .nav-links a:hover,
+  .nav-links a[aria-current='page'] {
+    opacity: 1;
+  }
+  .nav-cta {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    padding: 9px 16px;
+    border-radius: 100px;
+    transition:
+      background 0.25s,
+      color 0.25s;
+  }
+  .nav-cta:hover {
+    background: #fff;
+    color: var(--color-bg);
+  }
+
+  /* Burger — hidden on desktop */
+  .nav-burger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 30px;
+    height: 30px;
+    background: none;
+    border: 0;
+    cursor: pointer;
+    padding: 0;
+  }
+  .nav-burger span {
+    display: block;
+    width: 22px;
+    height: 1.5px;
+    background: #fff;
+    transition: transform 0.3s var(--ease-out-expo);
+  }
+  nav.open .nav-burger span:first-child {
+    transform: translateY(3.25px) rotate(45deg);
+  }
+  nav.open .nav-burger span:last-child {
+    transform: translateY(-3.25px) rotate(-45deg);
+  }
+
+  /* Mobile overlay menu */
+  .mobile-menu {
+    position: fixed;
+    inset: 0;
+    z-index: 99;
+    background: var(--color-bg);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 40px;
+    padding: var(--g);
+    opacity: 0;
+    transition: opacity 0.4s var(--ease-out-expo);
+  }
+  .mobile-menu.show {
+    opacity: 1;
+  }
+  .mobile-links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .mobile-links a {
+    font-weight: 300;
+    letter-spacing: -0.03em;
+    font-size: clamp(40px, 13vw, 64px);
+    line-height: 1.1;
+    color: var(--color-fg);
+  }
+  .mobile-links a[aria-current='page'] {
+    color: var(--color-accent);
+  }
+  .mobile-mail {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--color-fg-dim);
+    border-top: 1px solid var(--color-line);
+    padding-top: 28px;
+  }
+
+  @media (max-width: 680px) {
+    nav {
+      padding: 18px var(--g);
+    }
+    .nav-links {
+      display: none;
+    }
+    .nav-burger {
+      display: flex;
+    }
+  }
+  @media (min-width: 681px) {
+    .mobile-menu {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  const nav = document.querySelector('nav');
+  const burger = document.getElementById('nav-burger');
+  const menu = document.getElementById('mobile-menu');
+
+  if (nav && burger && menu) {
+    let open = false;
+
+    const setOpen = (next: boolean) => {
+      open = next;
+      burger.setAttribute('aria-expanded', String(open));
+      burger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      nav.classList.toggle('open', open);
+      document.body.style.overflow = open ? 'hidden' : '';
+      if (open) {
+        menu.hidden = false;
+        requestAnimationFrame(() => menu.classList.add('show'));
+        (menu.querySelector('a') as HTMLElement | null)?.focus();
+      } else {
+        menu.classList.remove('show');
+        burger.focus();
+        // wait for fade-out before hiding from a11y tree
+        setTimeout(() => {
+          if (!open) menu.hidden = true;
+        }, 400);
+      }
+    };
+
+    burger.addEventListener('click', () => setOpen(!open));
+    menu.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setOpen(false)));
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && open) setOpen(false);
+    });
+  }
+</script>

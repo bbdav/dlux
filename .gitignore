@@ -1,0 +1,28 @@
+# build output
+dist/
+.output/
+
+# dependencies
+node_modules/
+
+# astro
+.astro/
+
+# generated images cache
+.cache/
+
+# env
+.env
+.env.production
+.env.*.local
+
+# editor / os
+.DS_Store
+.vscode/*
+!.vscode/extensions.json
+*.log
+npm-debug.log*
+.eslintcache
+
+# cloudflare
+.wrangler/
