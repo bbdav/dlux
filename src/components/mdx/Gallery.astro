@@ -22,7 +22,7 @@ const { items, cols = 2, caption } = Astro.props;
         <Picture
           src={it.src}
           alt={it.alt}
-          formats={['avif', 'webp']}
+          formats={['webp']}
           widths={[400, 600, 900]}
           sizes={`(min-width: 720px) ${Math.round(100 / cols)}vw, 100vw`}
           class="gallery-img"
