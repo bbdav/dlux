@@ -36,13 +36,13 @@ const meta = [
       <p class="case-outcome rv rv2">{d.outcome}</p>
     </header>
 
-    <div class="case-hero wrap rv">
+    <div class="case-hero rv">
       <Picture
         src={heroImg}
         alt={heroAlt}
         formats={['webp']}
-        widths={[640, 1024, 1440]}
-        sizes="(min-width: 1440px) 1440px, 100vw"
+        widths={[768, 1280, 1920, 2560]}
+        sizes="100vw"
         class="case-hero-img"
         loading="eager"
         fetchpriority="high"
@@ -60,8 +60,16 @@ const meta = [
           ))
         }
         {
+          d.sector && d.sector.length > 0 && (
+            <div class="meta-cell meta-wide">
+              <dt>Sector</dt>
+              <dd>{d.sector.join(' · ')}</dd>
+            </div>
+          )
+        }
+        {
           d.services && d.services.length > 0 && (
-            <div class="meta-cell meta-services">
+            <div class="meta-cell meta-wide">
               <dt>Services</dt>
               <dd>{d.services.join(', ')}</dd>
             </div>
@@ -138,17 +146,18 @@ const meta = [
     max-width: 24ch;
   }
 
-  /* ---- hero ---- */
+  /* ---- hero — full-bleed, edge to edge (article spans the content width,
+     so 100% avoids the 100vw-scrollbar overflow) ---- */
   .case-hero {
-    margin-bottom: clamp(32px, 4vw, 56px);
+    width: 100%;
+    margin-bottom: clamp(40px, 5vw, 72px);
   }
   .case-hero-img {
+    display: block;
     width: 100%;
     height: auto;
     aspect-ratio: 16 / 9;
     object-fit: cover;
-    border-radius: 16px;
-    border: 1px solid var(--color-line);
     background: var(--color-surface);
   }
 
@@ -167,7 +176,7 @@ const meta = [
     background: var(--color-bg);
     padding: 22px 24px;
   }
-  .meta-services {
+  .meta-wide {
     grid-column: span 4;
   }
   .meta-cell dt {
@@ -202,6 +211,15 @@ const meta = [
   }
   .prose > :global(.u-bleed) {
     grid-column: full;
+  }
+  /* All case-study media (figures + carousels) share one width, matching
+     the hero, so every image and gallery lines up edge to edge. */
+  .prose > :global(.media) {
+    grid-column: full;
+    width: 100%;
+    max-width: var(--max);
+    margin-inline: auto;
+    padding-inline: var(--g);
   }
 
   /* prose typography */
@@ -305,7 +323,7 @@ const meta = [
     .metabar {
       grid-template-columns: repeat(2, 1fr);
     }
-    .meta-services {
+    .meta-wide {
       grid-column: span 2;
     }
   }

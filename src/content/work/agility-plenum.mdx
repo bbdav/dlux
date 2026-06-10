@@ -21,86 +21,191 @@ services:
 ---
 
 import Figure from '../../components/mdx/Figure.astro';
+import Carousel from '../../components/mdx/Carousel.astro';
 import PullQuote from '../../components/mdx/PullQuote.astro';
-import TwoColumn from '../../components/mdx/TwoColumn.astro';
-import Gallery from '../../components/mdx/Gallery.astro';
-import process from '../../assets/work/agility-process.jpg';
-import layouts from '../../assets/work/agility-layouts.png';
-import concept from '../../assets/work/agility-concept.jpg';
-import settings from '../../assets/work/agility-settings.jpg';
+import leap from '../../assets/work/agility-leap-1.jpg';
+import oldUi from '../../assets/work/agility-old-ui.jpg';
+import login from '../../assets/work/agility-login.jpg';
+import initialConcept from '../../assets/work/agility-initial-concept.jpg';
+import designSystem from '../../assets/work/agility-design-system.jpg';
+import dashboardOld from '../../assets/work/agility-dashboard-old.jpg';
+import dashboardNew from '../../assets/work/agility-dashboard-new.jpg';
+import contentOld from '../../assets/work/agility-content-old.jpg';
+import contentList from '../../assets/work/agility-content-list.jpg';
+import contentItem from '../../assets/work/agility-content-item.jpg';
+import pagesOld from '../../assets/work/agility-pages-old.jpg';
+import layoutsAdd from '../../assets/work/agility-layouts-add-component.png';
+import assetsOld from '../../assets/work/agility-assets-old.jpg';
+import assetsNew from '../../assets/work/agility-assets-new.jpg';
+import desktop from '../../assets/work/agility-desktop.jpg';
+import desktop1 from '../../assets/work/agility-desktop-1.jpg';
+import modelsOld from '../../assets/work/agility-models-old.jpg';
+import models from '../../assets/work/agility-models.jpg';
+import modelsEdit from '../../assets/work/agility-models-edit-fields.png';
+import reportsOld from '../../assets/work/agility-reports-old.jpg';
+import recentChanges from '../../assets/work/agility-recent-changes.jpg';
+import batches from '../../assets/work/agility-batches.jpg';
+import settingsOld from '../../assets/work/agility-settings-old.jpg';
+import locales from '../../assets/work/agility-locales.jpg';
+import globalConfig from '../../assets/work/agility-global-configuration.jpg';
+import contentSplash from '../../assets/work/agility-content-splash.jpg';
+import settingsSplash from '../../assets/work/agility-settings-splash.jpg';
+import modelsSplash from '../../assets/work/agility-models-splash.jpg';
+import assetsSplash from '../../assets/work/agility-assets-splash.jpg';
+import layoutsSplash from '../../assets/work/agility-layouts-splash.jpg';
 
-Agility CMS had grown fast. The interface had been pushed forward through prototyping, ahead of any real UX research, which is normal for a product at that stage. My job was to bring a mature design process into the product without slowing it down, and to leave behind something the whole team could build on.
-
-## The challenge
-
-The product looked the part but had never been examined as a user journey. Decisions were made for the screen in front of you, not for the path through the tool. That worked while the CMS was young. It stopped working as it grew, because there was no shared reference for how anything should look or behave.
-
-So I framed the work around two outcomes: understand how people actually use the CMS, and give design and engineering one source of truth.
+This project did not start the textbook way. There was no discovery phase. We went straight into prototyping to refresh the UI, which is where the product's UX maturity was at the time. As the work went on, that changed. What began as a visual update grew into a proper user-centred process, and I helped move the team there.
 
 <Figure
-  src={process}
-  alt="A design-thinking arc from Empathize and Define through Ideate, Prototype and Test."
-  caption="The shift: from prototype-first to a full empathize → define → ideate → prototype → test loop."
-  width="wide"
+  src={leap}
+  alt="An illustration of skipping the research phase and jumping straight to prototyping."
+  caption="We started mid-stream, then built the research practice the product was missing."
 />
 
 ## My role
 
-As product designer I steered the redesign from concept through post-launch refinement. In practice that meant:
+I led the design from first idea to post-launch improvements. I aligned goals and priorities with design, development, and customer success, and kept those teams coordinated. To make the experience cohesive, we built the Plenum design system, a user-centred framework meant to grow with the CMS. Even without a discovery phase, research became central: at each stage I ran surveys, interviews, and usability tests, then organised and acted on what came back. We ran Pixel Perfection workshops with developers to hold design integrity from prototype to production.
 
-- Aligning goals across design, development, and customer success
-- Building Plenum, a design system, as the shared framework
-- Running surveys, interviews, and usability tests at each stage
-- Holding Pixel Perfection workshops with engineers to protect design intent
-- Keeping user needs ahead of aesthetics in every call
+## Success metrics
 
-## A real feedback loop
+We tracked engagement (session length, page views, return rate), task completion rates for core jobs, WCAG 2.1 accessibility compliance, post-launch satisfaction from surveys and interviews, and the volume of usability-related support requests. Together they told us whether the redesign actually made the CMS easier to use.
 
-I paired qualitative and quantitative research so neither could mislead us. Interviews and usability tests gave direct signal. Surveys and analytics showed the broader pattern. Together they pointed at the work that mattered, and the early concepts started from there.
+## Understanding the existing solution
 
-<Figure
-  src={concept}
-  alt="An early redesign concept for the content list and management views."
-  caption="Early concepts: cleaner navigation, a calmer palette, and a clear global search."
+I started by living inside the CMS to map what it did well and where it fell short. I was less interested in surface polish and more in whether the platform could give users a more meaningful experience. I studied user input and the current design to find the changes that would matter most, focusing on the features that improved how the CMS actually worked day to day.
+
+<Figure src={oldUi} alt="The original Agility CMS interface before the redesign." caption="The starting point: the CMS as it was." />
+
+## Research with feedback loops
+
+To keep users in the process, I ran a continuous feedback loop with qualitative and quantitative research in parallel. Interviews and usability tests gave us a direct line to what people needed and where they got stuck. Surveys and analytics added the broader patterns. Those insights drove concrete improvements: a simplified home dashboard, smoother content workflows, clearer digital asset management, flexible layouts for more control over presentation, and an advanced search with filters that made content easy to find.
+
+## Initial concepts
+
+Simplicity and security led the first round. Sign-up and login moved to a split-screen layout with visible security cues, role personalisation, password recovery, and single sign-on. The content view got a cleaner palette, simpler navigation, and a global search.
+
+<Carousel
+  caption="First concepts: a secure split-screen sign-in and a cleaner content view."
+  items={[
+    { src: login, alt: 'Redesigned split-screen login with security cues.' },
+    { src: initialConcept, alt: 'Early content management concept with global search.' },
+  ]}
 />
 
-The first round of changes was concrete, not cosmetic:
+## The Plenum design system
 
-- **Home dashboard** simplified around the tools people actually open first
-- **Content management** reworked to cut steps out of everyday tasks
-- **Digital assets** restructured for clearer filing and faster retrieval
-- **Flexible layouts** that hand control of the page back to the user
-- **Advanced search** with filters that make content findable
+Plenum gave the CMS visual and functional consistency, a single design language flexible enough to grow with the product. I started from design trends and the CMS's real needs, then set core principles: simplicity, scalability, usability. Components were built to be reusable and consistent, with integration guidelines for applying them across the platform, and the whole team was brought along so Plenum stuck.
 
-## Plenum, the design system
+<Figure src={designSystem} alt="The Plenum design system: components, tokens and patterns." caption="Plenum: one reusable, scalable design language for the whole CMS." />
 
-Plenum gave the product one visual and behavioural language. I set its principles first — simplicity, scalability, usability — then built reusable components against them and wrote the guidelines for putting them together. Storybook held the live components, so engineers could develop and test each one in isolation and reuse it everywhere.
+We used Storybook to make Plenum live. Teams could build and test components in isolation and reuse them across the platform, which kept everything consistent as the CMS grew.
 
 <PullQuote cite="Harmonie Poirier · Head of Marketing, Agility CMS">
   He led UI redesigns, established a unified design system, and improved brand
   consistency across the board.
 </PullQuote>
 
-## Pages became Layouts
+## Home dashboard
 
-The biggest single change was a word. "Pages" became "Layouts", because that is how people actually think about structuring a site. Renaming it forced a rethink of the interaction model underneath. Drag and drop let users see and shape the content hierarchy directly, in line with the real architecture of their site.
+The goal for the dashboard was a faster, clearer start. Not just a fresh coat of paint, but simpler navigation and quicker access to what each type of user needs most. I designed a clean, focused layout so people could log in and get straight to work.
 
-<Figure
-  src={layouts}
-  alt="The Layouts builder with drag-and-drop components and content zones."
-  caption="Layouts: drag components into zones and build the page the way the site is structured."
+<Carousel
+  caption="Home dashboard, before and after."
+  items={[
+    { src: dashboardOld, alt: 'The old home dashboard.' },
+    { src: dashboardNew, alt: 'The redesigned home dashboard.' },
+  ]}
 />
 
-## Across the product
+## Content management
 
-The same thinking carried through Digital Assets, Models, Reports, and Settings. Models gained a visual, drag-to-reorganise view of content hierarchies. Reports pulled recent changes, ready-to-publish items, batches, and activity into one place. Settings was overhauled so global configuration, locales, and access control were reachable without losing any existing power.
+I redesigned content management around what creators and developers actually do, simplifying the interface and the way content is organised. With direct user feedback, workflows lost steps and gained confidence, so day-to-day content work became a clear, pleasant part of the platform.
 
-<Figure
-  src={settings}
-  alt="The redesigned global configuration and settings area."
-  caption="Settings, rebuilt for control without clutter."
+<Carousel
+  caption="Content management: the old view, the new list, and a content item."
+  items={[
+    { src: contentOld, alt: 'The old content management view.' },
+    { src: contentList, alt: 'The redesigned content list.' },
+    { src: contentItem, alt: 'A redesigned content item view.' },
+  ]}
 />
 
-## Outcome
+## Pages to Layouts
 
-What started as a UI refresh turned into something more useful: a working relationship between the product and its users. External interviews stayed limited, but the feedback loop and the ongoing Pixel Perfection workshops moved the design steadily toward something more inclusive and efficient. Design and engineering ended up speaking the same language, and the interface people used every day felt intuitive instead of improvised. That alignment, more than any single screen, is what the project delivered.
+The boldest change was turning the "Pages" section into "Layouts," so the CMS matched how people actually think about content. It meant rethinking the interaction model, not just the label. Drag-and-drop let users place and see their content hierarchy directly, making structure easy to build and change.
+
+<Carousel
+  caption="From Pages to Layouts, with drag-and-drop structure."
+  items={[
+    { src: pagesOld, alt: 'The old Pages section.' },
+    { src: layoutsAdd, alt: 'The new Layouts section, adding a component.' },
+  ]}
+/>
+
+## Digital asset management
+
+DAM was rebuilt around how people use and work with their media. I streamlined the flows, made filtering and categories more intuitive, and kept it consistent across media types. Clearer visual states and simpler filters let users find and manage assets quickly, in step with the rest of the CMS.
+
+<Carousel
+  caption="Digital asset management, redesigned for faster media handling."
+  items={[
+    { src: assetsOld, alt: 'The old digital asset management view.' },
+    { src: assetsNew, alt: 'The redesigned asset management view.' },
+    { src: desktop, alt: 'Asset management on desktop.' },
+    { src: desktop1, alt: 'Asset management detail view.' },
+  ]}
+/>
+
+## Models
+
+The Models redesign made managing content hierarchies visual and interactive. Drag-and-drop made reorganising models faster, and visual mapping let users see how models relate at a glance. It gave people a more active role in understanding and shaping a complex data structure.
+
+<Carousel
+  caption="Models: the old view, the new visual map, and editing fields."
+  items={[
+    { src: modelsOld, alt: 'The old Models section.' },
+    { src: models, alt: 'The redesigned Models view with visual mapping.' },
+    { src: modelsEdit, alt: 'Editing fields on a content model.' },
+  ]}
+/>
+
+## Reports
+
+The new Reports section gave a clearer overview across Recent Changes, Ready to Publish, Batches, User Activity, and Content Search. The aim was accessible, well-organised data, so users could understand their content workflows and stay ahead of them rather than chase them.
+
+<Carousel
+  caption="Reports: a clearer overview of content and activity."
+  items={[
+    { src: reportsOld, alt: 'The old Reports section.' },
+    { src: recentChanges, alt: 'The redesigned Recent Changes report.' },
+    { src: batches, alt: 'The Batches report.' },
+  ]}
+/>
+
+## Settings
+
+Settings was fully overhauled for cleaner control over the site. Global Configuration, Sitemaps, Locales, User and Team Access, and Roles all kept their function but became far easier to navigate. The new design makes configuration accessible and collaboration smoother, so users can manage permissions and settings on the fly.
+
+<Carousel
+  caption="Settings: clearer control over configuration, locales and access."
+  items={[
+    { src: settingsOld, alt: 'The old Settings section.' },
+    { src: locales, alt: 'The redesigned Locales settings.' },
+    { src: globalConfig, alt: 'Global Configuration settings.' },
+  ]}
+/>
+
+## Results and takeaways
+
+This started as a UI refresh and became something more durable. The live, post-launch feedback loop turned it into a real working relationship with stakeholders and tied product decisions directly to user insight. Paired with ongoing Pixel Perfection workshops, design and development stayed close, and the interface kept getting clearer and more capable. The lesson held throughout: empathy and steady, feedback-led iteration build a product that grows with the people using it.
+
+<Carousel
+  caption="The redesigned CMS: content, settings, models, assets and layouts."
+  items={[
+    { src: contentSplash, alt: 'Redesigned content management.' },
+    { src: settingsSplash, alt: 'Redesigned settings.' },
+    { src: modelsSplash, alt: 'Redesigned models.' },
+    { src: assetsSplash, alt: 'Redesigned digital assets.' },
+    { src: layoutsSplash, alt: 'Redesigned layouts.' },
+  ]}
+/>

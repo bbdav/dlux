@@ -1,0 +1,44 @@
+---
+/**
+ * Privacy-friendly responsive YouTube embed, sized to the shared media width.
+ */
+interface Props {
+  /** YouTube video id, e.g. "OJgsg29HE4M". */
+  id: string;
+  title: string;
+}
+const { id, title } = Astro.props;
+---
+
+<div class="video media">
+  <div class="video-frame">
+    <iframe
+      src={`https://www.youtube-nocookie.com/embed/${id}`}
+      title={title}
+      loading="lazy"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      referrerpolicy="strict-origin-when-cross-origin"
+      allowfullscreen></iframe>
+  </div>
+</div>
+
+<style>
+  .video {
+    margin-block: clamp(36px, 5vw, 72px);
+  }
+  .video-frame {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid var(--color-line);
+    background: var(--color-bg-soft);
+  }
+  .video-frame iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+</style>

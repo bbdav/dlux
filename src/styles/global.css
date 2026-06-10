@@ -45,9 +45,8 @@
   --color-line-soft: #1e1e21;
   --color-fg: #f4f3f0;
   --color-fg-mid: #a8a6a0;
-  /* fg-dim is 3.58:1 on --color-bg: AA for large text & UI, below 4.5:1 for
-     small labels. Kept verbatim per the locked palette (accepted deviation). */
-  --color-fg-dim: #6b6963;
+  /* fg-dim: 4.60:1 on --color-bg — meets WCAG AA for small text. */
+  --color-fg-dim: #7e7a72;
   --color-accent: #e8fe54;
   --color-accent-dim: #c5d946;
 
@@ -76,6 +75,26 @@
 :root {
   --g: clamp(20px, 4vw, 64px); /* page gutter */
   --max: 1440px;
+}
+
+/* ============================================================
+   LIGHT THEME — overrides the @theme :root custom properties.
+   Same warm/paper family, neutrals inverted. The lime accent is a
+   dark-mode colour, so it darkens to an olive-lime here: this keeps it
+   readable as text on paper AND lets the existing on-accent ink pattern
+   (color: var(--color-bg)) flip correctly, so no component CSS changes.
+   ============================================================ */
+:root[data-theme='light'] {
+  --color-bg: #f4f3f0;
+  --color-bg-soft: #ebe9e3;
+  --color-surface: #e4e1d9;
+  --color-line: #d6d2c9;
+  --color-line-soft: #e7e4dd;
+  --color-fg: #161618;
+  --color-fg-mid: #57554f;
+  --color-fg-dim: #6f6c64;
+  --color-accent: #4a7610;
+  --color-accent-dim: #477012;
 }
 
 /* ============================================================
@@ -224,6 +243,46 @@
   .rv3 {
     transition-delay: 0.24s;
   }
+}
+
+/* ============================================================
+   CUSTOM OVERLAY SCROLLBAR
+   A translucent thumb that overlaps the content and shows on hover only,
+   for tall images that scroll inside their frame. Native bar is hidden so
+   nothing reserves layout space. Enhanced by the script in BaseLayout.
+   ============================================================ */
+.scrollwrap {
+  position: relative;
+}
+.scrollwrap-area {
+  overflow-y: auto;
+  scrollbar-width: none; /* Firefox: hide native */
+  -ms-overflow-style: none;
+}
+.scrollwrap-area::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none;
+}
+.scrollwrap-thumb {
+  position: absolute;
+  top: 0;
+  right: 5px;
+  width: 6px;
+  border-radius: 99px;
+  background: color-mix(in srgb, var(--color-fg) 38%, transparent);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  z-index: 4;
+  cursor: grab;
+  will-change: transform;
+}
+.scrollwrap:hover .scrollwrap-thumb.is-on,
+.scrollwrap-thumb.is-dragging {
+  opacity: 1;
+}
+.scrollwrap-thumb.is-dragging {
+  cursor: grabbing;
 }
 
 /* ============================================================

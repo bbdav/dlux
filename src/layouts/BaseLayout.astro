@@ -52,5 +52,79 @@ const { title, description, image, article, hideFooter = false } = Astro.props;
         items.forEach((el) => io.observe(el));
       }
     </script>
+
+    <!-- Custom overlay scrollbar for tall, scrollable image frames. -->
+    <script>
+      document.querySelectorAll<HTMLElement>('.scrollwrap').forEach((wrap) => {
+        const area = wrap.querySelector<HTMLElement>('.scrollwrap-area');
+        if (!area) return;
+        const thumb = document.createElement('span');
+        thumb.className = 'scrollwrap-thumb';
+        wrap.appendChild(thumb);
+
+        const sync = () => {
+          const ratio = area.clientHeight / area.scrollHeight;
+          if (ratio >= 0.999) {
+            thumb.classList.remove('is-on');
+            return;
+          }
+          thumb.classList.add('is-on');
+          const trackH = area.clientHeight;
+          const thumbH = Math.max(28, trackH * ratio);
+          const maxTop = trackH - thumbH;
+          const range = area.scrollHeight - area.clientHeight;
+          const top = range > 0 ? (area.scrollTop / range) * maxTop : 0;
+          thumb.style.height = thumbH + 'px';
+          thumb.style.transform = `translateY(${top}px)`;
+        };
+
+        area.addEventListener('scroll', sync, { passive: true });
+        window.addEventListener('resize', sync);
+        wrap.querySelectorAll('img').forEach((im) => {
+          if (!im.complete) im.addEventListener('load', sync, { once: true });
+        });
+
+        // Drag the thumb to scroll.
+        let dragging = false,
+          startY = 0,
+          startScroll = 0;
+        thumb.addEventListener('mousedown', (e) => {
+          dragging = true;
+          startY = e.clientY;
+          startScroll = area.scrollTop;
+          thumb.classList.add('is-dragging');
+          e.preventDefault();
+          e.stopPropagation();
+        });
+        window.addEventListener('mousemove', (e) => {
+          if (!dragging) return;
+          const trackH = area.clientHeight;
+          const maxTop = trackH - thumb.offsetHeight;
+          const range = area.scrollHeight - area.clientHeight;
+          area.scrollTop = startScroll + ((e.clientY - startY) / maxTop) * range;
+        });
+        window.addEventListener('mouseup', () => {
+          dragging = false;
+          thumb.classList.remove('is-dragging');
+        });
+
+        sync();
+      });
+    </script>
+
+    <!-- Email anti-harvest: the address is assembled at runtime, so it never
+         appears in the HTML source for spam bots to scrape. -->
+    <script>
+      const user = 'contact';
+      const domain = 'dlux.ca';
+      const addr = user + String.fromCharCode(64) + domain;
+      document.querySelectorAll<HTMLAnchorElement>('.email-link').forEach((el) => {
+        el.href = 'mailto:' + addr;
+        if (el.hasAttribute('data-show')) {
+          const target = el.querySelector<HTMLElement>('.email-text') ?? el;
+          target.textContent = addr;
+        }
+      });
+    </script>
   </body>
 </html>

@@ -1,0 +1,54 @@
+---
+/**
+ * Inline call-to-action link for case studies (e.g. a Figma prototype).
+ */
+interface Props {
+  href: string;
+  external?: boolean;
+}
+const { href, external = true } = Astro.props;
+---
+
+<p class="btnlink-wrap">
+  <a
+    class="btnlink"
+    href={href}
+    data-cursor
+    {...external ? { target: '_blank', rel: 'noopener noreferrer' } : {}}
+  >
+    <slot />
+    <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M7 17 17 7M9 7h8v8" />
+    </svg>
+  </a>
+</p>
+
+<style>
+  .btnlink-wrap {
+    margin-block: 1.5em;
+  }
+  /* Selectors are scoped under .btnlink-wrap to outrank the .prose a rule in
+     CaseStudyLayout, which would otherwise force low-contrast text on the fill. */
+  .btnlink-wrap .btnlink {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    letter-spacing: 0.02em;
+    color: var(--color-bg);
+    background: var(--color-accent);
+    border: 1px solid var(--color-accent);
+    padding: 11px 20px;
+    border-radius: 100px;
+    transition:
+      background 0.25s,
+      color 0.25s,
+      transform 0.25s var(--ease-out-expo);
+  }
+  .btnlink-wrap .btnlink:hover {
+    background: transparent;
+    color: var(--color-accent);
+    transform: translateY(-2px);
+  }
+</style>

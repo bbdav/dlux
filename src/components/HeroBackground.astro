@@ -1,0 +1,300 @@
+---
+/**
+ * Abstract, subtle, interactive hero background — a slow domain-warped "aurora"
+ * of the brand accent over the theme background, leaning gently toward the
+ * cursor. Raw WebGL (no library). Falls back to a static CSS gradient when
+ * WebGL is unavailable or motion is reduced. Pauses offscreen / when hidden.
+ */
+interface Props {
+  /** Glow strength 0–1 (dark theme). Light theme is auto-softened. */
+  intensity?: number;
+  /** Motion speed multiplier. */
+  speed?: number;
+}
+const { intensity = 0.6, speed = 1 } = Astro.props;
+---
+
+<div
+  class="hero-bg"
+  data-hero-bg
+  data-intensity={intensity}
+  data-speed={speed}
+  aria-hidden="true"
+>
+  <canvas class="hero-bg-canvas"></canvas>
+</div>
+
+<style>
+  .hero-bg {
+    position: absolute;
+    /* Break out of the .hero .wrap box to span the full viewport width. */
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 100vw;
+    transform: translateX(-50%);
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+    /* Static fallback shown if WebGL is unavailable (canvas stays hidden). */
+    background:
+      radial-gradient(
+        55% 45% at 72% 28%,
+        color-mix(in srgb, var(--color-accent) 14%, transparent),
+        transparent 70%
+      ),
+      radial-gradient(
+        45% 40% at 22% 72%,
+        color-mix(in srgb, var(--color-accent) 9%, transparent),
+        transparent 70%
+      );
+  }
+  .hero-bg-canvas {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 1.2s ease;
+  }
+  .hero-bg-canvas.is-ready {
+    opacity: 1;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-bg-canvas {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  const root = document.querySelector<HTMLElement>('[data-hero-bg]');
+  const canvas = root?.querySelector<HTMLCanvasElement>('canvas');
+
+  if (root && canvas) {
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const gl = canvas.getContext('webgl', {
+      alpha: false,
+      antialias: false,
+      depth: false,
+      stencil: false,
+      powerPreference: 'low-power',
+    });
+
+    const VERT = 'attribute vec2 p;void main(){gl_Position=vec4(p,0.0,1.0);}';
+    const FRAG = `
+      precision highp float;
+      uniform vec2 u_res; uniform float u_time; uniform vec2 u_mouse;
+      uniform vec3 u_bg; uniform vec3 u_accent; uniform float u_intensity;
+      float hash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453123);}
+      float noise(vec2 p){
+        vec2 i=floor(p),f=fract(p); vec2 u=f*f*(3.0-2.0*f);
+        return mix(mix(hash(i),hash(i+vec2(1,0)),u.x),
+                   mix(hash(i+vec2(0,1)),hash(i+vec2(1,1)),u.x),u.y);
+      }
+      float fbm(vec2 p){
+        float v=0.0,a=0.5;
+        for(int i=0;i<5;i++){v+=a*noise(p);p=p*2.0+vec2(11.3,7.7);a*=0.5;}
+        return v;
+      }
+      void main(){
+        vec2 uv=gl_FragCoord.xy/u_res;
+        float aspect=u_res.x/u_res.y;
+        vec2 p=vec2(uv.x*aspect,uv.y);
+        vec2 m=(u_mouse-0.5);
+        float t=u_time*0.06;
+        vec2 q=vec2(fbm(p*1.3+t),fbm(p*1.3+vec2(5.2,1.3)-t));
+        vec2 r=vec2(fbm(p*1.3+1.2*q+m*0.85+0.15*t),
+                    fbm(p*1.3+1.2*q+vec2(8.3,2.8)-m*0.65-0.12*t));
+        float f=fbm(p*1.3+1.6*r);
+        float g=pow(smoothstep(0.35,0.95,f),1.4);
+        float g2=smoothstep(0.55,0.92,fbm(r*2.0+m*0.5));
+        float vig=smoothstep(1.2,0.3,length(uv-0.5));
+        // Soft halo that follows the cursor — makes the interaction obvious.
+        vec2 cp=vec2((uv.x-u_mouse.x)*aspect,uv.y-u_mouse.y);
+        float cur=pow(smoothstep(0.55,0.0,length(cp)),1.5);
+        // One smoke density, mixed bg -> accent: lightens on dark, darkens on
+        // light, consistently (no additive terms that cancel out).
+        float dens=clamp(((g+g2*0.25)*vig+cur*0.4)*u_intensity,0.0,1.0);
+        vec3 col=mix(u_bg,u_accent,dens);
+        float d=(hash(gl_FragCoord.xy)-0.5)/255.0;
+        gl_FragColor=vec4(col+d,1.0);
+      }`;
+
+    const compile = (type: number, src: string) => {
+      const s = gl!.createShader(type)!;
+      gl!.shaderSource(s, src);
+      gl!.compileShader(s);
+      return s;
+    };
+
+    let ok = false;
+    let prog: WebGLProgram | null = null;
+    if (gl) {
+      prog = gl.createProgram();
+      if (prog) {
+        gl.attachShader(prog, compile(gl.VERTEX_SHADER, VERT));
+        gl.attachShader(prog, compile(gl.FRAGMENT_SHADER, FRAG));
+        gl.linkProgram(prog);
+        ok = gl.getProgramParameter(prog, gl.LINK_STATUS);
+      }
+    }
+
+    // No WebGL / compile failure → leave the CSS gradient fallback in place.
+    if (gl && prog && ok) {
+      gl.useProgram(prog);
+      const buf = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
+      const loc = gl.getAttribLocation(prog, 'p');
+      gl.enableVertexAttribArray(loc);
+      gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+
+      const U = {
+        res: gl.getUniformLocation(prog, 'u_res'),
+        time: gl.getUniformLocation(prog, 'u_time'),
+        mouse: gl.getUniformLocation(prog, 'u_mouse'),
+        bg: gl.getUniformLocation(prog, 'u_bg'),
+        accent: gl.getUniformLocation(prog, 'u_accent'),
+        intensity: gl.getUniformLocation(prog, 'u_intensity'),
+      };
+
+      const baseIntensity = parseFloat(root.dataset.intensity || '0.6');
+      const speed = parseFloat(root.dataset.speed || '1');
+      const SCALE = 0.6; // render under-resolution; the aurora is low-frequency
+
+      let W = 1,
+        H = 1;
+      const resize = () => {
+        const r = canvas.getBoundingClientRect();
+        W = Math.max(1, Math.floor(r.width * SCALE));
+        H = Math.max(1, Math.floor(r.height * SCALE));
+        canvas.width = W;
+        canvas.height = H;
+        gl.viewport(0, 0, W, H);
+      };
+
+      const hexToRgb = (hex: string): [number, number, number] => {
+        let h = hex.trim().replace('#', '');
+        if (h.length === 3)
+          h = h
+            .split('')
+            .map((c) => c + c)
+            .join('');
+        const n = parseInt(h || '000000', 16);
+        return [((n >> 16) & 255) / 255, ((n >> 8) & 255) / 255, (n & 255) / 255];
+      };
+      let bg: [number, number, number] = [0, 0, 0];
+      let accent: [number, number, number] = [1, 1, 1];
+      let intensity = baseIntensity;
+      const readTheme = () => {
+        const cs = getComputedStyle(document.documentElement);
+        const light = document.documentElement.dataset.theme === 'light';
+        bg = hexToRgb(cs.getPropertyValue('--color-bg') || (light ? '#f4f3f0' : '#0b0b0c'));
+        // Neutral smoke: soft white on dark, mid-grey on light (not the accent).
+        accent = light ? [0.34, 0.34, 0.32] : [0.96, 0.96, 0.94];
+        intensity = light ? baseIntensity * 0.95 : baseIntensity * 0.7;
+      };
+
+      let mx = 0.5,
+        my = 0.42,
+        tmx = 0.5,
+        tmy = 0.42;
+      window.addEventListener(
+        'pointermove',
+        (e) => {
+          const r = canvas.getBoundingClientRect();
+          tmx = (e.clientX - r.left) / r.width;
+          tmy = 1 - (e.clientY - r.top) / r.height;
+        },
+        { passive: true }
+      );
+
+      const start = performance.now();
+      const elapsed = () => (performance.now() - start) / 1000;
+
+      const draw = (timeSec: number) => {
+        mx += (tmx - mx) * 0.09;
+        my += (tmy - my) * 0.09;
+        gl.uniform2f(U.res, W, H);
+        gl.uniform1f(U.time, timeSec * speed);
+        gl.uniform2f(U.mouse, mx, my);
+        gl.uniform3fv(U.bg, bg);
+        gl.uniform3fv(U.accent, accent);
+        gl.uniform1f(U.intensity, intensity);
+        gl.drawArrays(gl.TRIANGLES, 0, 3);
+      };
+
+      resize();
+      readTheme();
+
+      let raf = 0;
+      let running = false;
+      let last = 0;
+      const FRAME = 1000 / 40; // cap ~40fps
+      const loop = (now: number) => {
+        raf = requestAnimationFrame(loop);
+        if (now - last < FRAME) return;
+        last = now;
+        draw((now - start) / 1000);
+      };
+      const play = () => {
+        if (running || reduce) return;
+        running = true;
+        raf = requestAnimationFrame(loop);
+      };
+      const pause = () => {
+        running = false;
+        cancelAnimationFrame(raf);
+      };
+
+      canvas.classList.add('is-ready');
+
+      if (reduce) {
+        // One static frame, no loop.
+        mx = tmx;
+        my = tmy;
+        draw(0);
+      } else {
+        let onScreen = true;
+        let visible = !document.hidden;
+        const sync = () => (onScreen && visible ? play() : pause());
+
+        new IntersectionObserver(
+          ([e]) => {
+            onScreen = e.isIntersecting;
+            sync();
+          },
+          { threshold: 0 }
+        ).observe(root);
+
+        document.addEventListener('visibilitychange', () => {
+          visible = !document.hidden;
+          sync();
+        });
+
+        play();
+      }
+
+      // Re-read colours on theme switch and redraw immediately (so it updates
+      // even on the frame the loop is throttled or paused).
+      new MutationObserver(() => {
+        readTheme();
+        draw(elapsed());
+      }).observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['data-theme'],
+      });
+
+      let rt: number;
+      window.addEventListener('resize', () => {
+        clearTimeout(rt);
+        rt = window.setTimeout(() => {
+          resize();
+          if (reduce) draw(0);
+        }, 150);
+      });
+    }
+  }
+</script>

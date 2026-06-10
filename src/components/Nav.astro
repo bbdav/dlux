@@ -1,5 +1,7 @@
 ---
-import { NAV_LINKS, SITE } from '../consts';
+import { NAV_LINKS } from '../consts';
+import Logo from './Logo.astro';
+import ThemeToggle from './ThemeToggle.astro';
 
 // Active-state detection (ignore mailto/external links).
 const path = Astro.url.pathname;
@@ -8,14 +10,20 @@ const isActive = (href: string) =>
 ---
 
 <nav aria-label="Primary">
-  <a href="/" class="logo" aria-label="dlux — home">d<b>.</b>lux</a>
+  <a href="/" class="logo" aria-label="dlux — home">
+    <Logo />
+  </a>
 
   <div class="nav-r">
     <ul class="nav-links">
       {
         NAV_LINKS.filter((l) => l.href.startsWith('/')).map((l) => (
           <li>
-            <a href={l.href} aria-current={isActive(l.href) ? 'page' : undefined}>
+            <a
+              href={l.href}
+              aria-current={isActive(l.href) ? 'page' : undefined}
+              {...l.newTab ? { target: '_blank', rel: 'noopener noreferrer' } : {}}
+            >
               {l.label}
             </a>
           </li>
@@ -23,7 +31,9 @@ const isActive = (href: string) =>
       }
     </ul>
 
-    <a href={`mailto:${SITE.email}`} class="nav-cta" data-cursor>Get in touch</a>
+    <a href="#" class="nav-cta email-link" data-cursor>Get in touch</a>
+
+    <ThemeToggle class="nav-theme" />
 
     <button
       type="button"
@@ -46,8 +56,9 @@ const isActive = (href: string) =>
         <li>
           <a
             href={l.href}
+            class:list={[l.email && 'email-link']}
             aria-current={isActive(l.href) ? 'page' : undefined}
-            {...l.href.startsWith('http')
+            {...l.newTab || l.href.startsWith('http')
               ? { target: '_blank', rel: 'noopener noreferrer' }
               : {}}
           >
@@ -57,7 +68,7 @@ const isActive = (href: string) =>
       ))
     }
   </ul>
-  <a href={`mailto:${SITE.email}`} class="mobile-mail">{SITE.email}</a>
+  <a href="#" class="mobile-mail email-link" data-show>Email</a>
 </div>
 
 <style>
@@ -67,18 +78,25 @@ const isActive = (href: string) =>
     left: 0;
     right: 0;
     z-index: 100;
-    padding: 24px var(--g);
+    padding: 18px var(--g);
     display: flex;
     align-items: center;
     justify-content: space-between;
-    mix-blend-mode: difference;
+    color: var(--color-fg);
+    /* Frosted glass header */
+    background: color-mix(in srgb, var(--color-bg) 65%, transparent);
+    -webkit-backdrop-filter: blur(16px) saturate(1.6);
+    backdrop-filter: blur(16px) saturate(1.6);
+    border-bottom: 1px solid color-mix(in srgb, var(--color-line) 60%, transparent);
   }
   .logo {
-    font-family: var(--font-sans);
-    font-weight: 600;
-    font-size: 19px;
-    letter-spacing: -0.02em;
-    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    color: var(--color-fg);
+  }
+  .logo :global(.logo-mark) {
+    width: 30px;
+    height: 30px;
   }
   .nav-r {
     display: flex;
@@ -94,28 +112,29 @@ const isActive = (href: string) =>
     font-family: var(--font-mono);
     font-size: 12px;
     letter-spacing: 0.02em;
-    color: #fff;
-    opacity: 0.75;
-    transition: opacity 0.25s;
+    color: var(--color-fg-mid);
+    transition: color 0.25s;
   }
   .nav-links a:hover,
   .nav-links a[aria-current='page'] {
-    opacity: 1;
+    color: var(--color-fg);
   }
   .nav-cta {
     font-family: var(--font-mono);
     font-size: 12px;
-    color: #fff;
-    border: 1px solid rgba(255, 255, 255, 0.4);
+    color: var(--color-fg);
+    border: 1px solid var(--color-line);
     padding: 9px 16px;
     border-radius: 100px;
     transition:
       background 0.25s,
-      color 0.25s;
+      color 0.25s,
+      border-color 0.25s;
   }
   .nav-cta:hover {
-    background: #fff;
+    background: var(--color-accent);
     color: var(--color-bg);
+    border-color: var(--color-accent);
   }
 
   /* Burger — hidden on desktop */
@@ -135,7 +154,7 @@ const isActive = (href: string) =>
     display: block;
     width: 22px;
     height: 1.5px;
-    background: #fff;
+    background: var(--color-fg);
     transition: transform 0.3s var(--ease-out-expo);
   }
   nav.open .nav-burger span:first-child {

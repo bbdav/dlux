@@ -27,6 +27,18 @@ const ogImage = new URL(image, Astro.site ?? SITE.domain).href;
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <meta name="generator" content={Astro.generator} />
 
+<!-- Set theme before first paint to avoid a flash. Defaults to dark. -->
+<script is:inline>
+  (() => {
+    try {
+      const t = localStorage.getItem('theme');
+      document.documentElement.dataset.theme = t === 'light' ? 'light' : 'dark';
+    } catch {
+      document.documentElement.dataset.theme = 'dark';
+    }
+  })();
+</script>
+
 <title>{pageTitle}</title>
 <meta name="description" content={description} />
 <meta name="author" content={SITE.author} />
@@ -34,7 +46,7 @@ const ogImage = new URL(image, Astro.site ?? SITE.domain).href;
 
 <!-- Theme / browser chrome -->
 <meta name="theme-color" content="#0B0B0C" />
-<meta name="color-scheme" content="dark" />
+<meta name="color-scheme" content="dark light" />
 
 <!-- Favicons -->
 <link rel="icon" href="/favicon.svg" type="image/svg+xml" />

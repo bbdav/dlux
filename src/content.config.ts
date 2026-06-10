@@ -29,6 +29,8 @@ const work = defineCollection({
       draft: z.boolean().default(false),
       /** Optional metadata-bar entries on the case study. */
       services: z.array(z.string()).optional(),
+      /** Industry/domain tags shown in the case-study metadata bar. */
+      sector: z.array(z.string()).optional(),
     }),
 });
 

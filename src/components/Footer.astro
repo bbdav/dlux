@@ -1,11 +1,14 @@
 ---
 import { SOCIALS } from '../consts';
+import Logo from './Logo.astro';
 const year = new Date().getFullYear();
 ---
 
 <footer>
   <div class="wrap foot">
-    <a href="/" class="logo" aria-label="dlux — home">d<b>.</b>lux</a>
+    <a href="/" class="logo" aria-label="dlux — home">
+      <Logo />
+    </a>
     <ul class="foot-links">
       {
         SOCIALS.map((s) => (
@@ -40,11 +43,14 @@ const year = new Date().getFullYear();
     flex-wrap: wrap;
   }
   .logo {
-    font-family: var(--font-sans);
-    font-weight: 600;
-    font-size: 19px;
-    letter-spacing: -0.02em;
+    display: inline-flex;
+    align-items: center;
     color: var(--color-fg);
+  }
+  /* Sized to sit within the existing footer row so it doesn't add height. */
+  .logo :global(.logo-mark) {
+    width: 24px;
+    height: 24px;
   }
   .foot-links {
     display: flex;

@@ -9,10 +9,15 @@ summary: "Rebuilt an industrial manufacturer's site around product discovery and
 outcome: "Streamlined an HVAC manufacturer's site around product discovery and quotes, cutting bounce rate."
 cover: '../../assets/work/corporate-cover.jpg'
 coverAlt: 'The corporate website design system: colour, type, and components.'
-hero: '../../assets/work/corporate-cover.jpg'
-heroAlt: 'Style guide for the corporate website redesign: palette, typography, UI components.'
+hero: '../../assets/work/corporate-hero.jpg'
+heroAlt: 'The redesigned corporate website on mobile.'
 order: 7
 draft: false
+sector:
+  - 'HVAC manufacturer'
+  - 'Industrial'
+  - 'Air curtains'
+  - 'R&D'
 services:
   - 'User research'
   - 'Journey mapping'
@@ -22,55 +27,82 @@ services:
 ---
 
 import Figure from '../../components/mdx/Figure.astro';
-import Gallery from '../../components/mdx/Gallery.astro';
-import selector from '../../assets/work/corporate-selector.jpg';
-import journey from '../../assets/work/corporate-journey.jpg';
-import wireframe from '../../assets/work/corporate-wireframe.png';
-import oldsite from '../../assets/work/corporate-old.jpg';
+import Carousel from '../../components/mdx/Carousel.astro';
+import oldSite from '../../assets/work/corporate-old-site.jpg';
+import researchNotes from '../../assets/work/corporate-research-with-notes-scaled-ql7zyxpk1f1g2uhfa4v9pa04qxq7rwcr6raq47xrao.jpg';
+import selector from '../../assets/work/corporate-selector-ql7zz589k3bqnq6i284a983ti0p5hh6lvsilyfmlww.jpg';
+import empathyMap from '../../assets/work/corporate-empathy-map-1.jpg';
+import persona from '../../assets/work/corporate-user-persona.jpg';
+import journeyMap from '../../assets/work/corporate-journey-map.jpg';
+import sitemap from '../../assets/work/corporate-corporate-website-sitemap.jpg';
+import styleGuide from '../../assets/work/corporate-design-system-3.jpg';
+import desktopFinal from '../../assets/work/corporate-website-redesign-1.jpg';
+import mobileFinal from '../../assets/work/corporate-mobile-website-redesign-1.jpg';
+import desktopFinal2 from '../../assets/work/corporate-website-redesign2.jpg';
 
-The same HVAC manufacturer behind the controller app had a website working against it. The job was to turn a dense, technical site into one where a buyer can find the right product and ask for a quote without friction.
+The same HVAC manufacturer behind the controller app had a website working against it. The brief was to redesign how customers browse the product catalogue, choose the right product, and request a quote, and to lift engagement along the way.
 
-## What was in the way
+## Understanding the existing interface
 
-The old site fought its visitors: auto-playing slideshows, menus that wrapped and confused, navigation repeated in three places, and content written for search engines and engineers rather than the people trying to buy.
+The old site fought its visitors. An autoplaying slideshow led the page. The menu had a boxed layout that wrapped and pushed the page down, the top navigation was redundant and duplicated, and important items were buried in dropdowns. UI elements were cramped, the content was written for SEO rather than people, and the main calls to action assumed you were already a technical buyer who knew the catalogue.
 
-<Figure
-  src={oldsite}
-  alt="The previous corporate website before the redesign."
-  caption="Before: autoplay slideshows, redundant navigation, and SEO-first copy."
+<Figure src={oldSite} alt="The previous corporate website before the redesign." caption="Before: autoplay slideshows, redundant navigation, and SEO-first copy." />
+
+## Design process
+
+Before designing, I aligned with stakeholders so we agreed on goals, scope, and the target user. I set up interviews with product owners, engineers, and marketing, then mapped the customer journey to find the opportunity areas. Four questions framed it: what the site needs to accomplish, who it is for, what references it should learn from, and what rules and limitations apply.
+
+## Research
+
+To understand how visitors navigate and what drives their decisions, I ran face-to-face interviews and Zoom sessions, giving people tasks and asking them to think aloud as they used the site.
+
+<Carousel
+  caption="Research sessions and the product selector, worked out with real users."
+  items={[
+    { src: researchNotes, alt: 'Research session notes.' },
+    { src: selector, alt: 'The product selector concept.' },
+  ]}
 />
 
-## Listening before drawing
+<Figure src={empathyMap} alt="An empathy map from the UX research." caption="An empathy map to hold what we heard from users." />
 
-I started with stakeholder alignment across product, engineering, and marketing to pin down the goals, the real audiences, and the constraints. Then I sat with users, in person and over Zoom, watching them complete tasks and thinking aloud, to learn how they actually navigate and decide.
+## Persona
 
-<Figure
-  src={selector}
-  alt="An early whiteboard sketch of the product selector."
-  caption="The product selector, worked out at the whiteboard before anything else."
+I created proto-personas, grounded in industry knowledge and research, as a starting point for reasoning about user needs and the problems the information architecture had to solve.
+
+<Figure src={persona} alt="A user persona for the website redesign." caption="Proto-personas kept the design anchored to real buyers." />
+
+## Customer journey map
+
+From the research, I built a detailed customer journey map covering each touchpoint: what users do, their goals, expectations, and emotions. It made the pain points impossible to ignore and pointed directly at what to improve.
+
+<Figure src={journeyMap} alt="The customer journey map for the website redesign." caption="A journey map turned scattered frustration into a list of things to fix." />
+
+## Information architecture
+
+I built the information architecture to map every path a visitor can take through the site, well beyond a sitemap showing which page leads where.
+
+<Figure src={sitemap} alt="The corporate website sitemap and information architecture." caption="The new IA: real pathways through the site, not just a page list." />
+
+## Wireframing and prototyping
+
+I worked entirely in Figma for wireframes and high-fidelity interactive prototypes. Wireframes set the structural framework first, prioritising logical flow and intuitive navigation. The interactive prototypes then brought those frames to life for stakeholders, who could try the design directly and give immediate, actionable feedback, which kept iterations fast and grounded in research.
+
+## Style guide
+
+A documented style guide kept the visual language consistent as it scaled across the site.
+
+<Figure src={styleGuide} alt="The web UI design system and style guide." caption="One style guide to keep the site consistent as it grew." />
+
+## Results and takeaways
+
+Since launch, behaviour analysis showed a significant drop in bounce rate. Users called out the streamlined navigation and better content scannability, which made product searches faster and saved them time, and several said the site simply looks and feels more polished.
+
+<Carousel
+  caption="The redesigned site across desktop and mobile."
+  items={[
+    { src: desktopFinal, alt: 'The redesigned corporate website on desktop.' },
+    { src: mobileFinal, alt: 'The redesigned corporate website on mobile.' },
+    { src: desktopFinal2, alt: 'The redesigned corporate website, additional pages.' },
+  ]}
 />
-
-## Mapping the path
-
-Proto-personas captured who we were designing for. A detailed customer journey map laid out their goals, expectations, and the emotional highs and lows, which made the pain points impossible to ignore. From there I built an information architecture that mapped real pathways through the site, not just a sitemap.
-
-<Figure
-  src={journey}
-  alt="The customer journey map for the website redesign."
-  caption="A journey map turned scattered frustration into a list of things to fix."
-  width="wide"
-/>
-
-## Structure, then surface
-
-Wireframes and interactive Figma prototypes put logical flow and intuitive navigation first, so stakeholders could react to something real and iterate fast. A documented style guide kept the visual language consistent as it scaled across the site.
-
-<Figure
-  src={wireframe}
-  alt="A landing page wireframe prioritising flow and navigation."
-  caption="Wireframes focused on flow first, so feedback landed on structure, not colour."
-/>
-
-## Outcome
-
-The new site brought a significant drop in bounce rate. Users called out the streamlined navigation, the content that was finally easy to scan, faster product searches, and a presentation that matched the company behind it.

@@ -9,10 +9,15 @@ summary: 'Redesigned a commenting engagement unit with new metrics and reactions
 outcome: 'Rebuilt a commenting engagement unit around clearer metrics, cleaner reactions, and signups.'
 cover: '../../assets/work/commenting-cover.jpg'
 coverAlt: 'Design iterations of the commenting thread overview.'
-hero: '../../assets/work/commenting-cover.jpg'
-heroAlt: 'A spread of commenting thread overview design variations.'
+hero: '../../assets/work/commenting-hero.jpg'
+heroAlt: 'The redesigned commenting thread overview in context.'
 order: 6
 draft: false
+sector:
+  - 'Engagement & monetisation'
+  - 'Commenting'
+  - 'Content engagement'
+  - 'Video'
 services:
   - 'Product design'
   - 'Interaction states'
@@ -20,39 +25,65 @@ services:
 ---
 
 import Figure from '../../components/mdx/Figure.astro';
-import Gallery from '../../components/mdx/Gallery.astro';
-import reactions from '../../assets/work/commenting-reactions.jpg';
-import states from '../../assets/work/commenting-states.jpg';
+import Carousel from '../../components/mdx/Carousel.astro';
+import reactions from '../../assets/work/commenting-insticator-commenting-reactions.jpg';
+import overview6 from '../../assets/work/commenting-commenting-overview6.jpg';
+import overview5 from '../../assets/work/commenting-commenting-overview5.jpg';
+import overview4 from '../../assets/work/commenting-commenting-overview4.jpg';
+import overview3 from '../../assets/work/commenting-commenting-overview3.jpg';
+import overview2 from '../../assets/work/commenting-commenting-overview2.jpg';
+import overview1 from '../../assets/work/commenting-commenting-overview-1.jpg';
+import overviewStates from '../../assets/work/commenting-commenting-overview-ix-states.jpg';
+import topComment from '../../assets/work/commenting-top-comment-ix-states.jpg';
+import assets from '../../assets/work/commenting-assets-for-exporting.jpg';
+import overviewFinal from '../../assets/work/commenting-commenting-overview.jpg';
 
-A commenting unit only earns its place on a page if it pulls people in. This one had grown stale: a couple of basic counts and a generic emoji tray that did nothing for the brand. The redesign turned it into a reason to participate, and to sign up.
+A commenting unit only earns its place on a page if it pulls people in. The brief was to add new features and interactions, and to give the unit an overview of all its comments and threads, with one goal: get both known users and observers more engaged, and ultimately signed up.
 
-## Reading the old unit
+## Analysing the existing solution
 
-The original let people post and read comments, but it surfaced almost nothing about the conversation. Comment count and active users, and not much else. The reactions were off-the-shelf emoji that carried no meaning back to the publisher.
+The original unit let people post under an article and read others' comments and replies. It surfaced only two metrics: how many comments and replies there were, and how many people were active on the page. Reactions existed only at the article level, and individual comments used a generic emoji library, so reactions were neither unique nor branded.
 
-## An overview worth watching
+<Figure src={reactions} alt="The original comment reactions using a generic emoji library." caption="The starting point: off-the-shelf emoji that meant nothing to the publisher." />
 
-The new overview gives the thread a pulse. It shows total comments, how many people are active on the page, whether the thread is trending within a configurable window, thread views, and a single total-reactions number that rolls up upvotes, downvotes, replies, and emoji into one signal.
+## A commenting overview worth watching
 
-<Figure
-  src={states}
-  alt="Documented interaction states for the commenting overview component."
-  caption="Every state, documented: hovers, clicks, and transitions, ready for build."
-  width="wide"
+The new overview sits above the comment tree on every article where commenting is enabled. It shows the total comment count for the thread, the active-on-page count, a "Trending Now" position when the article ranks in the top ten within a configurable window, thread views, and a single Reactions number that rolls up comments, replies, upvotes, downvotes, and emoji into one signal.
+
+I made several versions as the requirements firmed up. As the team grew comfortable with the visuals, the brief shifted a few times, and the final design landed compact and editorial.
+
+<Carousel
+  caption="Overview iterations, from detailed concepts to the compact, editorial final."
+  items={[
+    { src: overview6, alt: 'Commenting overview iteration.' },
+    { src: overview5, alt: 'Commenting overview iteration.' },
+    { src: overview4, alt: 'Commenting overview iteration.' },
+    { src: overview3, alt: 'Commenting overview iteration.' },
+    { src: overview2, alt: 'Commenting overview iteration.' },
+    { src: overview1, alt: 'Commenting overview final design.' },
+  ]}
 />
 
-The layout went through several rounds as requirements firmed up, landing on something compact and editorial. A Top Comment surfaces the highest-engagement reply, ranked by replies and refreshed hourly, with show-more to expand. Top Terms lists the five most-used words so readers can filter the thread by what people are actually talking about.
+<Figure src={overviewStates} alt="Documented interaction states for the commenting overview." caption="Every state documented: hovers, clicks, and transitions, ready for build." />
 
-## Reactions that mean something
+## Top Comment
 
-The biggest call was cutting a library of over a hundred emoji down to a focused set of emotion and vote options. Fewer, clearer choices did two things at once: they reduced the toxic edge that a giant emoji wall invites, and they produced clean, comparable data the publisher could actually benchmark.
+Top Comment creates a little healthy competition and surfaces the best contributions. It ranks by total replies to an original comment, and to save space, especially on mobile, it shows the first two rows of text with a "Show more" button that expands the rest and up to five replies. It refreshes no more than hourly, and publishers can switch it off from the admin.
 
-<Figure
-  src={reactions}
-  alt="The simplified reaction set and the all-reactions modal."
-  caption="A tighter reaction set: calmer for readers, and far more useful as data."
-/>
+<Figure src={topComment} alt="Interaction states for the Top Comment feature." caption="Top Comment: the highest-engagement reply, ranked by replies." />
 
-## Outcome
+## Top terms and reactions
 
-The redesign gave the unit something to differentiate on, standardised how engagement gets measured, trimmed the features no one used, and pointed the whole thing at one goal: turning a passing reader into a registered user, then handing engineering a clean component library to build it.
+Top Terms shows up to five of the most-used words across the thread, so readers can filter to the comments on a specific topic. For reactions, I cut a library of more than a hundred emoji down to a focused set of votes and emotions. Fewer, clearer choices reduced the toxic edge a giant emoji wall invites, and produced clean, comparable data the publisher could benchmark and surface in the overview.
+
+## Isolated assets for handoff
+
+As a standard part of the process, I prepared isolated, export-ready assets and the interaction documentation engineering needed to build the unit across desktop and mobile, including states and notifications.
+
+<Figure src={assets} alt="Isolated, export-ready assets for engineering handoff." caption="Clean, isolated assets prepared for a smooth build." />
+
+## Results and takeaways
+
+The redesign gave the unit something to differentiate on, standardised how engagement gets measured, and trimmed the features people weren't using. It focused on observers, understanding their behaviour to get them engaged and, ultimately, to create an account, all pointed at the longer-term goal of a more data-focused product.
+
+<Figure src={overviewFinal} alt="The final commenting overview in context." caption="The finished overview: a thread you can read at a glance." />

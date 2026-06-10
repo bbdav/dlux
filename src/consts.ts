@@ -14,14 +14,17 @@ export const SITE = {
   author: 'David Babijaev',
   locale: 'en_CA',
   ogImage: '/og-default.png',
-  email: 'david@dlux.ca',
+  email: 'contact@dlux.ca',
   location: 'Bradford, ON · Greater Toronto Area',
 } as const;
 
 export const NAV_LINKS = [
-  { label: 'Work', href: '/work' },
-  { label: 'About', href: '/about' },
-  { label: 'Contact', href: 'mailto:david@dlux.ca' },
+  { label: 'Work', href: '/work', newTab: false, email: false },
+  { label: 'About', href: '/about', newTab: false, email: false },
+  { label: 'Resume', href: '/resume.pdf', newTab: true, email: false },
+  // Email is wired client-side (see the obfuscation script in BaseLayout) so the
+  // address never appears in the HTML for spam bots to scrape.
+  { label: 'Contact', href: '#', newTab: false, email: true },
 ] as const;
 
 export const SOCIALS = [

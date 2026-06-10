@@ -13,6 +13,11 @@ hero: '../../assets/work/insticator-hero.jpg'
 heroAlt: 'Publisher Portal 2.0 revenue overview with charts and revenue drivers.'
 order: 2
 draft: false
+sector:
+  - 'Engagement & monetisation'
+  - 'Commenting'
+  - 'Content engagement'
+  - 'Content moderation'
 services:
   - 'UX design'
   - 'Information architecture'
@@ -21,57 +26,88 @@ services:
 ---
 
 import Figure from '../../components/mdx/Figure.astro';
-import Gallery from '../../components/mdx/Gallery.astro';
-import nav from '../../assets/work/insticator-nav.jpg';
+import Carousel from '../../components/mdx/Carousel.astro';
+import oldUi from '../../assets/work/insticator-old-ui.jpg';
+import comp1 from '../../assets/work/insticator-staticshot-14-07-2021-18-40-03-ql802xiv32ibf6oiyd16srpnmw1dhl7oqj40jk0iuo.jpg';
+import comp2 from '../../assets/work/insticator-staticshot-14-07-2021-18-39-43-ql802ygp9wjlqsn5svftd9h489wqpabf2nri0tz4og.jpg';
+import comp3 from '../../assets/work/insticator-staticshot-14-07-2021-18-39-29-ql8035zesktwboc8kyotx7kszcvoev59rozdv1nzao.jpg';
+import comp4 from '../../assets/work/insticator-staticshot-14-07-2021-18-39-15-ql8036x8zev6naavfh3ghpc9kqr1mk903tmvcbml4g.jpg';
+import comp5 from '../../assets/work/insticator-staticshot-14-07-2021-18-38-49-ql8037v368wgyw9i9zi3273q64meu9cqfyactll6y8.jpg';
 import ia from '../../assets/work/insticator-ia.jpg';
-import reports from '../../assets/work/insticator-reports.jpg';
-import datepicker from '../../assets/work/insticator-datepicker.jpg';
+import oldMenu from '../../assets/work/insticator-old-menu.jpg';
+import navbarCollapsed from '../../assets/work/insticator-navbar-collapsed.jpg';
+import revOverview from '../../assets/work/insticator-revoverview.jpg';
+import revenueCards from '../../assets/work/insticator-revenue-cards.jpg';
+import revenue from '../../assets/work/insticator-revenue.jpg';
+import unitLoadRpm from '../../assets/work/insticator-unit-load-rpm.jpg';
+import unitLoads from '../../assets/work/insticator-unit-loads.jpg';
+import datePicker from '../../assets/work/insticator-date-picker-expanded.jpg';
+import ppv2 from '../../assets/work/insticator-ppv2.jpg';
 
-Publishers came to the portal to answer one question: where is my revenue coming from? The old interface made that surprisingly hard. The redesign put the answer up front.
+Publishers came to the portal to answer one question: where is my revenue coming from? The old interface made that surprisingly hard. The redesign rebuilt the information architecture, navigation, and reports so the answer is one glance away, split by media and ad type. One constraint shaped it throughout: customers had to keep full access to their existing production data and reports while the new portal and its features rolled out.
 
-## Where it broke down
+## Understanding the existing interface
 
-The data publishers needed most, revenue by content type, was scattered across a wall of cards. Anything beyond the surface meant leaving the main view, which broke their train of thought. The portal held the numbers but never told the story.
+Publishers struggled to find the metrics that mattered. Aggregate data was split across many cards that often had no relationship to each other, and deeper insight meant opening a separate "View details" page, which lost context every time. Navigation sat across the top with no room to grow, so new sections had nowhere to go.
 
-The brief was to rebuild the navigation and the reports around how revenue actually works, while keeping the legacy production data reachable through the transition.
+<Figure src={oldUi} alt="The original Publisher Portal interface before the redesign." caption="The starting point: revenue scattered across disconnected cards." />
 
-## Moving the navigation
+## Research and analysis
 
-Competitor analysis pointed to a clear pattern: the industry had moved toward drawer-style menus. I mapped a new information architecture so the team agreed on the menu before any pixels moved, then relocated navigation from the top to a vertical left sidebar that collapses to icons. That handed the right side of the screen back to the content.
+Before redrawing the IA, I ran a short competitor analysis. The pattern was clear: the industry had moved to left-hand drawer navigation, which scales far better than a top bar.
 
-<Figure
-  src={ia}
-  alt="An information architecture map of the portal's new menu structure."
-  caption="A shared IA map aligned the team on structure before design began."
+<Carousel
+  caption="Competitor analysis: the shift toward left-hand drawer navigation."
+  items={[
+    { src: comp1, alt: 'Competitor dashboard with left drawer navigation.' },
+    { src: comp2, alt: 'Competitor dashboard navigation example.' },
+    { src: comp3, alt: 'Competitor dashboard navigation example.' },
+    { src: comp4, alt: 'Competitor dashboard navigation example.' },
+    { src: comp5, alt: 'Competitor dashboard navigation example.' },
+  ]}
 />
 
-<Figure
-  src={nav}
-  alt="The collapsed left navigation rail reduced to icons."
-  caption="Navigation moved left and collapses to icons, freeing space for the data."
-/>
+## Information architecture
+
+I drew a new IA map for the menu structure so the whole team agreed on the shape of the portal before any screens were designed.
+
+<Figure src={ia} alt="An information architecture map of the portal's new menu structure." caption="A shared IA map aligned the team on structure before design began." />
+
+## Navigation redesign
+
+Whiteboarding, wireframes, UI, and testing with internal and external teams led to one decision: move the menu to a vertical rail on the left. It can take new items without limit, and it collapses to icons, handing the right side of the screen back to the content.
+
+<Figure src={oldMenu} alt="The old top navigation bar." caption="Before: a top bar with no room to grow." />
+
+<Figure src={navbarCollapsed} alt="The new collapsed left navigation rail reduced to icons." caption="After: a vertical rail that collapses to icons." />
 
 ## Reading revenue at a glance
 
-Three compact cards sit at the top of every report, rolling revenue drivers up by day, week, month, and quarter. Below them, the reports do the heavy lifting: stacked bars for additive data, multi-line charts where metrics live in different units, and consistent Revenue, Unit Load RPM, and Unit Loads tabs so the layout never surprises you.
+Each report leads with three compact cards spanning the page, giving instant context across the revenue drivers, rolled up by day, week, month, and quarter.
 
-<Figure
-  src={reports}
-  alt="A revenue report with stacked bar and multi-line charts."
-  caption="Reports share one layout, so moving between metrics costs no relearning."
-  width="wide"
+<Figure src={revOverview} alt="The revenue overview with context cards and charts." caption="Every report opens with the context that used to be buried." />
+
+<Figure src={revenueCards} alt="The three revenue context cards at the top of a report." caption="Three cards, one glance: the revenue drivers up front." />
+
+The Revenue, Unit Load RPM, and Unit Loads tabs share one layout, so moving between them costs no relearning. I used stacked bars for additive data and multi-line charts where metrics live on different axes.
+
+<Carousel
+  caption="Consistent reports across Revenue, Unit Load RPM, and Unit Loads."
+  items={[
+    { src: revenue, alt: 'The Revenue report.' },
+    { src: unitLoadRpm, alt: 'The Unit Load RPM report.' },
+    { src: unitLoads, alt: 'The Unit Loads report.' },
+  ]}
 />
 
 ## The small things that get used most
 
-The date picker gets touched on nearly every visit, so it earned real attention. Presets like Yesterday and Last 7 days cover the common cases, and built-in comparison against the previous period or last year answers the next question before it is asked.
+The date picker gets touched on nearly every visit, so it earned real attention. Presets like Yesterday, Last 7 days, and This Month cover the common cases, and built-in comparison against the previous period or last year answers the next question before it is asked.
 
-<Figure
-  src={datepicker}
-  alt="The redesigned date picker with presets and comparison options."
-  caption="Presets and comparisons built into the picker, where the work actually happens."
-/>
+<Figure src={datePicker} alt="The redesigned date picker with presets and comparison options." caption="Presets and comparisons built into the picker, where the work happens." />
 
-## Outcome
+## Results and takeaways
 
-The work shipped as more than screens: presentations to leadership, close coordination with engineering, and interviews with the team during the build. What landed was a professional, lightly playful portal backed by a reusable component library, where the path from question to answer is short.
+The work shipped as more than screens: a final review with engineering, design, PMs, and the VP of product, close coordination to fit the existing architecture, and interviews with the team during the build. What landed was a professional, lightly playful portal backed by a reusable component library, with a clearer hierarchy and a short path from question to answer.
+
+<Figure src={ppv2} alt="The finished Publisher Portal 2.0 revenue dashboard." caption="Publisher Portal 2.0: the numbers that matter, one glance away." />

@@ -9,10 +9,14 @@ summary: 'Reworked a high-volume tire-buying flow to cut friction and lift conve
 outcome: 'Redesigned the tire buying flow and lifted user engagement by 20% (per Toptal case study).'
 cover: '../../assets/work/simpletire-cover.jpg'
 coverAlt: 'The redesigned SimpleTire product page.'
-hero: '../../assets/work/simpletire-cover.jpg'
-heroAlt: 'SimpleTire product page with pricing, deals and cart on a desktop mockup.'
+hero: '../../assets/work/simpletire-hero.webp'
+heroAlt: 'SimpleTire product experience across desktop and mobile.'
 order: 4
 draft: false
+sector:
+  - 'B2C tire retail'
+  - 'Automotive'
+  - 'E-commerce'
 services:
   - 'Product design'
   - 'E-commerce UX'
@@ -21,49 +25,81 @@ services:
 ---
 
 import Figure from '../../components/mdx/Figure.astro';
+import Carousel from '../../components/mdx/Carousel.astro';
 import PullQuote from '../../components/mdx/PullQuote.astro';
-import Gallery from '../../components/mdx/Gallery.astro';
-import s1 from '../../assets/work/simpletire-1.jpg';
-import s2 from '../../assets/work/simpletire-2.jpg';
-import s3 from '../../assets/work/simpletire-3.jpg';
-import s4 from '../../assets/work/simpletire-4.jpg';
+import ButtonLink from '../../components/mdx/ButtonLink.astro';
+import desktop from '../../assets/work/simpletire-simpletire-desktop.jpg';
+import s1 from '../../assets/work/simpletire-simpletire1.jpg';
+import s2 from '../../assets/work/simpletire-simpletire2.jpg';
+import s3 from '../../assets/work/simpletire-simpletire3.jpg';
+import s4 from '../../assets/work/simpletire-simpletire4.jpg';
+import s5 from '../../assets/work/simpletire-simpletire5.jpg';
 
-Buying tires online asks people to make a confident decision about a complex product they rarely think about. SimpleTire sells at high volume, so every bit of friction in that decision costs real carts. I reworked the flow to take the friction out.
+Buying tires online asks people to make a confident decision about a complex product they rarely think about. SimpleTire sells at high volume, so every bit of friction in that decision costs real carts. I led the design of the buying experience to take that friction out.
+
+<ButtonLink href="https://www.toptal.com/case-study/tire-service-company-boosts-user-engagement">Read the full Toptal case study</ButtonLink>
 
 ## The problem
 
-Tire selection was cumbersome, the design had aged, and conversions were sliding. The brief was to design new features, build prototypes worth testing, and lift the experience without losing the brand.
+Tire selection was cumbersome, the design had aged, and conversions were sliding. The brief was to design new features, build prototypes worth testing, and lift the experience without losing the brand identity.
 
-## Research first
+## Research
 
-I used both sides of the research toolkit: interviews, surveys, analytics, and usability testing. Together they showed where customers and stakeholders hit friction, and gave each design decision something real to stand on rather than a hunch.
+I used both sides of the research toolkit: in-depth interviews, surveys, analytics, and usability testing. Interviews surfaced what customers and internal stakeholders needed, analytics showed where people dropped off through bounce rates and session data, and usability testing put prototypes in front of real users for direct feedback. Together they gave each decision something real to stand on.
 
-## Where the work landed
+## Ideation
 
-Most of the gains came from the moments closest to the purchase:
+Working closely with the UX lead and the team, I refined concepts into user-centred interface designs and prototypes, then worked with developers to implement them cleanly. Data and feedback drove the calls, and I kept an eye on where the category was heading so the designs stayed competitive.
 
-- **Product list and page** rebuilt around clearer layouts, real filtering, structured specs, reviews, and interactive galleries
-- **Offers and rebates** pulled into an accessible deals section with clear actions and personalised picks
-- **Product comparison** as a side-by-side tool for specs, pricing, and reviews, so the choice is informed
-- **Cart and installation** joined up, so buying tires and booking the appointment happen in one flow
-- **Helper prompts** offering contextual support, maintenance tips, and recommendations along the way
+<Figure src={desktop} alt="SimpleTire desktop product experience." caption="The reworked desktop buying experience." />
 
-<Gallery
-  cols={2}
-  items={[
-    { src: s1, alt: 'SimpleTire product discovery and filtering.' },
-    { src: s2, alt: 'SimpleTire deals and rebates section.' },
-    { src: s3, alt: 'SimpleTire product comparison tool.' },
-    { src: s4, alt: 'SimpleTire cart with installation scheduling.' },
-  ]}
-  caption="Discovery, deals, comparison, and a cart that books installation in the same flow."
-/>
+<Figure src={s1} alt="SimpleTire product discovery and filtering." caption="Discovery and filtering, rebuilt for quick comparison." />
+
+## Product list and page
+
+Clarity, efficiency, and engagement led the work here. The product list got an optimised layout and intuitive filtering for fast comparison. The product page structured the key specs and customer reviews clearly, with interactive image galleries to bring each tire to life. Usability testing refined these flows into a streamlined, user-centred experience.
+
+## Offers and rebates
+
+The offers section gives people exclusive deals in a clear, accessible layout, with obvious calls to action and personalised picks based on their preferences, so relevant savings are easy to find.
+
+<Figure src={s3} alt="SimpleTire offers and rebates section." caption="Deals and rebates, made easy to browse and act on." />
+
+<Figure src={s2} alt="SimpleTire personalised offers." caption="Personalised recommendations surface the most relevant savings." />
+
+## Product comparison
+
+The comparison tool lets people weigh tire options side by side: specs, pricing, and reviews in one view, customisable to what they care about most, whether that is performance, durability, or price. It turns a confusing choice into an informed one.
+
+## Shopping cart and installation
+
+The cart integrates with the installation scheduler, so buying tires and booking the appointment happen in one flow. Clear prompts carry people from selection to checkout, with availability and installation options built in.
+
+<Figure src={s4} alt="SimpleTire cart with installation scheduling." caption="Cart and installation, joined into a single flow." />
+
+<Figure src={s5} alt="SimpleTire installation scheduling detail." caption="Pick a time and place without leaving the purchase." />
+
+## Helper prompts
+
+Small, contextual prompts support people along the way: updating an installation date, maintenance tips and buying guides, and a shopping adviser offering tailored recommendations.
 
 <PullQuote cite="Outcome · per published Toptal case study">
   User engagement rose by 20 percent, alongside gains in conversion and
   satisfaction.
 </PullQuote>
 
-## Outcome
+## Results and takeaways
 
-The reworked flow lifted user engagement by roughly 20 percent, with conversion and satisfaction moving up alongside it. The work was later featured in a published Toptal case study.
+The reworked flow lifted user engagement by roughly 20 percent, with conversion and satisfaction moving up alongside it. Data-driven iteration through user research and A/B testing refined the prototypes, and close work with engineering carried the designs into production with shared guidelines for consistency. The work was later featured in a published Toptal case study.
+
+<Carousel
+  caption="The redesigned SimpleTire experience: deals, discovery, comparison, cart and installation."
+  items={[
+    { src: s2, alt: 'SimpleTire offers.' },
+    { src: s1, alt: 'SimpleTire discovery and filtering.' },
+    { src: s3, alt: 'SimpleTire deals and rebates.' },
+    { src: s4, alt: 'SimpleTire cart with installation.' },
+    { src: s5, alt: 'SimpleTire installation scheduling.' },
+    { src: desktop, alt: 'SimpleTire desktop experience.' },
+  ]}
+/>

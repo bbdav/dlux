@@ -26,3 +26,4 @@ npm-debug.log*
 
 # cloudflare
 .wrangler/
+.claude/

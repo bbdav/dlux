@@ -1,0 +1,287 @@
+---
+import { Image } from 'astro:assets';
+
+interface Item {
+  src: ImageMetadata;
+  alt: string;
+}
+interface Props {
+  items: Item[];
+  caption?: string;
+}
+const { items, caption } = Astro.props;
+---
+
+<figure class="carousel media" data-carousel>
+  <div class="car-stage">
+    <div
+      class="car-viewport"
+      tabindex="0"
+      role="group"
+      aria-roledescription="carousel"
+      aria-label="Image gallery. Use the left and right arrow keys to browse."
+    >
+      <div class="car-track">
+        {
+          items.map((it, i) => (
+            <div class="car-slide scrollwrap" role="group" aria-label={`${i + 1} of ${items.length}`}>
+              <div class="car-scroll scrollwrap-area">
+                <Image
+                  src={it.src}
+                  alt={it.alt}
+                  widths={[768, 1200, 1600]}
+                  sizes="(min-width: 1200px) 1200px, 100vw"
+                  format="webp"
+                  class="car-img"
+                  draggable={false}
+                />
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+
+    {
+      items.length > 1 && (
+        <>
+          <button type="button" class="car-btn car-prev" aria-label="Previous image">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7" /></svg>
+          </button>
+          <button type="button" class="car-btn car-next" aria-label="Next image">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7" /></svg>
+          </button>
+          <span class="car-count" aria-hidden="true"><b class="car-i">1</b>/{items.length}</span>
+        </>
+      )
+    }
+  </div>
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>
+
+<style>
+  .carousel {
+    margin-block: clamp(36px, 5vw, 72px);
+  }
+  .car-stage {
+    position: relative;
+  }
+  .car-viewport {
+    display: flex;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    border-radius: 14px;
+    border: 1px solid var(--color-line);
+    background: var(--color-bg-soft);
+    cursor: grab;
+    height: auto; /* set by JS to the active slide */
+    transition: height 0.35s var(--ease-out-expo);
+  }
+  .car-viewport::-webkit-scrollbar {
+    display: none;
+  }
+  .car-viewport.dragging {
+    cursor: grabbing;
+    scroll-behavior: auto;
+  }
+  .car-viewport:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+  .car-track {
+    display: flex;
+    align-items: flex-start; /* no stretch — slides keep their own height */
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    width: 100%;
+  }
+  .car-slide {
+    flex: 0 0 100%;
+    scroll-snap-align: start;
+  }
+  .car-scroll {
+    /* Tall images scroll inside the slide, then the page scrolls. */
+    max-height: 100vh;
+  }
+  .car-img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .car-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 1px solid var(--color-line);
+    background: color-mix(in srgb, var(--color-bg) 72%, transparent);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    color: var(--color-fg);
+    cursor: pointer;
+    z-index: 3;
+    transition:
+      opacity 0.25s,
+      background 0.25s,
+      color 0.25s;
+  }
+  .car-prev {
+    left: 14px;
+  }
+  .car-next {
+    right: 14px;
+  }
+  .car-btn:hover {
+    background: var(--color-accent);
+    color: var(--color-bg);
+    border-color: var(--color-accent);
+  }
+  .car-btn[disabled] {
+    opacity: 0.25;
+    pointer-events: none;
+  }
+  .car-count {
+    position: absolute;
+    bottom: 14px;
+    right: 16px;
+    z-index: 3;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--color-fg);
+    background: color-mix(in srgb, var(--color-bg) 72%, transparent);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    padding: 4px 10px;
+    border-radius: 100px;
+    border: 1px solid var(--color-line);
+  }
+  figcaption {
+    margin-top: 14px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.03em;
+    color: var(--color-fg-dim);
+    text-align: center;
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-carousel]').forEach((root) => {
+    const vp = root.querySelector<HTMLElement>('.car-viewport');
+    const slides = [...root.querySelectorAll<HTMLElement>('.car-slide')];
+    if (!vp || !slides.length) return;
+    const prev = root.querySelector<HTMLButtonElement>('.car-prev');
+    const next = root.querySelector<HTMLButtonElement>('.car-next');
+    const counter = root.querySelector<HTMLElement>('.car-i');
+
+    const indexOf = () => Math.round(vp.scrollLeft / vp.clientWidth);
+
+    // Viewport height tracks the active slide's image height (capped at the
+    // viewport) so there are never top/bottom gaps and tall images scroll.
+    const fit = () => {
+      const slide = slides[Math.min(indexOf(), slides.length - 1)];
+      if (!slide) return;
+      const img = slide.querySelector<HTMLImageElement>('img');
+      const cap = window.innerHeight;
+      // Intrinsic aspect from the width/height attributes — available before the
+      // (lazy) image decodes and independent of the height we set on the flex
+      // viewport, so there is no layout circularity.
+      const iw = img ? Number(img.getAttribute('width')) : 0;
+      const ih = img ? Number(img.getAttribute('height')) : 0;
+      let h: number;
+      if (iw && ih) {
+        h = (ih * vp.clientWidth) / iw;
+      } else if (img && img.naturalWidth) {
+        h = (img.naturalHeight * vp.clientWidth) / img.naturalWidth;
+      } else {
+        h = slide.scrollHeight;
+      }
+      vp.style.height = Math.round(Math.min(h, cap)) + 'px';
+    };
+
+    const update = () => {
+      const i = indexOf();
+      if (counter) counter.textContent = String(i + 1);
+      if (prev) prev.disabled = i <= 0;
+      if (next) next.disabled = i >= slides.length - 1;
+      fit();
+    };
+
+    const go = (i: number) => {
+      const clamped = Math.max(0, Math.min(i, slides.length - 1));
+      // Align to the slide's real position (robust against any snap offset).
+      const delta = slides[clamped].getBoundingClientRect().left - vp.getBoundingClientRect().left;
+      const max = vp.scrollWidth - vp.clientWidth;
+      vp.scrollLeft = Math.max(0, Math.min(Math.round(vp.scrollLeft + delta), max));
+      update();
+    };
+    prev?.addEventListener('click', () => go(indexOf() - 1));
+    next?.addEventListener('click', () => go(indexOf() + 1));
+
+    vp.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        go(indexOf() + 1);
+      } else if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        go(indexOf() - 1);
+      }
+    });
+
+    // Mouse drag-to-scroll (touch uses native scroll)
+    let down = false,
+      moved = false,
+      startX = 0,
+      startScroll = 0;
+    vp.addEventListener('mousedown', (e) => {
+      down = true;
+      moved = false;
+      startX = e.pageX;
+      startScroll = vp.scrollLeft;
+      vp.classList.add('dragging');
+      e.preventDefault();
+    });
+    window.addEventListener('mousemove', (e) => {
+      if (!down) return;
+      const dx = e.pageX - startX;
+      if (Math.abs(dx) > 4) moved = true;
+      vp.scrollLeft = startScroll - dx;
+    });
+    window.addEventListener('mouseup', () => {
+      if (!down) return;
+      down = false;
+      vp.classList.remove('dragging');
+      if (moved) go(indexOf());
+    });
+
+    let t: number;
+    vp.addEventListener('scroll', () => {
+      clearTimeout(t);
+      t = window.setTimeout(update, 90);
+    });
+    window.addEventListener('resize', update);
+
+    // Init after images decode so heights are correct.
+    const imgs = [...root.querySelectorAll('img')];
+    let pending = imgs.filter((im) => !im.complete).length;
+    imgs.forEach((im) => {
+      if (!im.complete)
+        im.addEventListener(
+          'load',
+          () => {
+            if (--pending <= 0) update();
+          },
+          { once: true }
+        );
+    });
+    update();
+  });
+</script>

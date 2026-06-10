@@ -1,9 +1,12 @@
 ---
-// Oversized masked headline. Animation is pure CSS and is neutralised by the
-// global prefers-reduced-motion rule (content stays visible).
+// Oversized masked headline. Reveal animation is pure CSS and is neutralised by
+// the global prefers-reduced-motion rule. The interactive WebGL aurora sits
+// behind the content and degrades to a static gradient.
+import HeroBackground from './HeroBackground.astro';
 ---
 
 <header class="hero wrap">
+  <HeroBackground />
   <div class="hero-top">
     <p class="hero-status">
       <span class="status-dot" aria-hidden="true"></span> Available for senior &amp; contract roles
@@ -33,6 +36,12 @@
     padding-top: 120px;
     padding-bottom: 48px;
     position: relative;
+  }
+  /* Keep the headline + lede above the aurora canvas (z-index: 0). */
+  .hero-top,
+  .hero-bottom {
+    position: relative;
+    z-index: 1;
   }
   .hero-top {
     flex: 1;

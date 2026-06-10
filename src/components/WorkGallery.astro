@@ -239,87 +239,47 @@ const projects = await getWork();
   const vp = document.getElementById('work-vp');
   if (vp) {
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    /* ---- mouse drag-to-scroll with momentum (touch uses native scroll) ---- */
-    let down = false;
-    let moved = false;
-    let startX = 0;
-    let startScroll = 0;
-    let lastX = 0;
-    let vel = 0;
-    let raf = 0;
+    let isDown = false, moved = false, startX = 0, startScroll = 0, vel = 0, lastX = 0, raf = 0;
 
     const momentum = () => {
       vel *= 0.93;
       vp.scrollLeft -= vel;
-      if (Math.abs(vel) > 0.4 && vp.scrollLeft > 0 && vp.scrollLeft < vp.scrollWidth - vp.clientWidth) {
-        raf = requestAnimationFrame(momentum);
-      }
+      if (Math.abs(vel) > 0.4) raf = requestAnimationFrame(momentum);
     };
 
-    vp.addEventListener('pointerdown', (e) => {
-      if (e.pointerType !== 'mouse') return; // let touch/pen scroll natively
-      down = true;
-      moved = false;
-      startX = lastX = e.clientX;
-      startScroll = vp.scrollLeft;
-      vel = 0;
+    vp.addEventListener('mousedown', (e) => {
+      isDown = true; moved = false;
+      startX = lastX = e.pageX; startScroll = vp.scrollLeft; vel = 0;
       cancelAnimationFrame(raf);
       vp.classList.add('dragging');
-      vp.setPointerCapture(e.pointerId);
+      e.preventDefault();
     });
-
-    vp.addEventListener('pointermove', (e) => {
-      if (!down) return;
-      const dx = e.clientX - startX;
+    window.addEventListener('mousemove', (e) => {
+      if (!isDown) return;
+      const dx = e.pageX - startX;
       if (Math.abs(dx) > 4) moved = true;
       vp.scrollLeft = startScroll - dx;
-      vel = e.clientX - lastX;
-      lastX = e.clientX;
+      vel = e.pageX - lastX; lastX = e.pageX;
+    });
+    window.addEventListener('mouseup', () => {
+      if (!isDown) return;
+      isDown = false;
+      vp.classList.remove('dragging');
+      if (!reduce && Math.abs(vel) > 1) raf = requestAnimationFrame(momentum);
     });
 
-    const release = (e: PointerEvent) => {
-      if (!down) return;
-      down = false;
-      vp.classList.remove('dragging');
-      try {
-        vp.releasePointerCapture(e.pointerId);
-      } catch {}
-      if (!reduce && Math.abs(vel) > 1) raf = requestAnimationFrame(momentum);
-    };
-    vp.addEventListener('pointerup', release);
-    vp.addEventListener('pointercancel', release);
+    vp.querySelectorAll('a').forEach((a) => {
+      a.addEventListener('click', (e) => { if (moved) e.preventDefault(); });
+    });
 
-    /* suppress the click that follows a real drag */
-    vp.addEventListener(
-      'click',
-      (e) => {
-        if (moved) {
-          e.preventDefault();
-          e.stopPropagation();
-        }
-      },
-      true
-    );
-
-    /* ---- keyboard: arrow keys scroll the rail ---- */
     vp.addEventListener('keydown', (e) => {
       const card = vp.querySelector<HTMLElement>('.proj');
       const step = card ? card.offsetWidth + 24 : 320;
-      const behavior: ScrollBehavior = reduce ? 'auto' : 'smooth';
-      if (e.key === 'ArrowRight') {
-        e.preventDefault();
-        vp.scrollBy({ left: step, behavior });
-      } else if (e.key === 'ArrowLeft') {
-        e.preventDefault();
-        vp.scrollBy({ left: -step, behavior });
-      } else if (e.key === 'Home') {
-        e.preventDefault();
-        vp.scrollTo({ left: 0, behavior });
-      } else if (e.key === 'End') {
-        e.preventDefault();
-        vp.scrollTo({ left: vp.scrollWidth, behavior });
-      }
+      const behavior = reduce ? 'auto' : 'smooth';
+      if (e.key === 'ArrowRight') { e.preventDefault(); vp.scrollBy({ left: step, behavior }); }
+      else if (e.key === 'ArrowLeft') { e.preventDefault(); vp.scrollBy({ left: -step, behavior }); }
+      else if (e.key === 'Home') { e.preventDefault(); vp.scrollTo({ left: 0, behavior }); }
+      else if (e.key === 'End') { e.preventDefault(); vp.scrollTo({ left: vp.scrollWidth, behavior }); }
     });
   }
 </script>

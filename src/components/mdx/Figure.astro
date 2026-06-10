@@ -1,49 +1,51 @@
 ---
-import { Picture } from 'astro:assets';
+import { Image } from 'astro:assets';
 
 interface Props {
   src: ImageMetadata;
   alt: string;
   caption?: string;
-  /** Layout width within the case-study grid. */
-  width?: 'content' | 'wide' | 'bleed';
 }
 
-const { src, alt, caption, width = 'content' } = Astro.props;
-const cls = width === 'wide' ? 'u-wide' : width === 'bleed' ? 'u-bleed' : '';
+const { src, alt, caption } = Astro.props;
 ---
 
-<figure class:list={['fig', cls]}>
-  <Picture
-    src={src}
-    alt={alt}
-    formats={['webp']}
-    widths={[480, 768, 1200, 1600]}
-    sizes={width === 'bleed'
-      ? '100vw'
-      : width === 'wide'
-        ? '(min-width: 1100px) 1100px, 100vw'
-        : '(min-width: 720px) 68ch, 100vw'}
-    class="fig-img"
-  />
+<figure class="fig media">
+  <div class="fig-frame scrollwrap">
+    <div class="fig-scroll scrollwrap-area">
+      <Image
+        src={src}
+        alt={alt}
+        widths={[768, 1200, 1600]}
+        sizes="(min-width: 1200px) 1200px, 100vw"
+        format="webp"
+        class="fig-img"
+      />
+    </div>
+  </div>
   {caption && <figcaption>{caption}</figcaption>}
 </figure>
 
 <style>
   .fig {
-    margin-block: clamp(32px, 5vw, 64px);
+    margin-block: clamp(36px, 5vw, 72px);
   }
-  .fig-img {
-    width: 100%;
-    height: auto;
+  /* Image fills its box at native aspect ratio — no letterboxing. If it's
+     taller than the viewport it scrolls inside the frame (custom overlay
+     scrollbar), then the page scrolls. */
+  .fig-frame {
     border-radius: 14px;
     border: 1px solid var(--color-line);
-    background: var(--color-surface);
+    background: var(--color-bg-soft);
+    overflow: hidden;
   }
-  .u-bleed .fig-img {
-    border-radius: 0;
-    border-left: 0;
-    border-right: 0;
+  .fig-scroll {
+    max-height: 100vh;
+  }
+  .fig-img {
+    display: block;
+    width: 100%;
+    height: auto;
   }
   figcaption {
     margin-top: 14px;
