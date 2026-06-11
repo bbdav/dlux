@@ -58,7 +58,7 @@ export const TESTIMONIALS = [
     quote:
       'A rare skill set across web, mobile, and on-device interfaces. Works well in teams and solo. Resilient and genuinely expert.',
     name: 'Jonathan Theriault',
-    role: 'Director of Technology · Insticator',
+    role: 'Director of Technology · Berner',
   },
   {
     quote:
