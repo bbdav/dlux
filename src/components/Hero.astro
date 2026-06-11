@@ -64,22 +64,31 @@ import HeroBackground from './HeroBackground.astro';
     animation: rise 0.9s 0.2s var(--ease-out-expo) forwards;
   }
   .status-dot {
+    position: relative;
     width: 7px;
     height: 7px;
     border-radius: 50%;
     background: var(--color-accent);
-    box-shadow: 0 0 0 0 var(--color-accent);
+  }
+  /* GPU-composited ping: an expanding ring via transform + opacity (no
+     box-shadow, which forces paint and can't be composited). */
+  .status-dot::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: var(--color-accent);
     animation: ping 2.6s infinite;
   }
   @keyframes ping {
     0% {
-      box-shadow: 0 0 0 0 rgba(232, 254, 84, 0.5);
+      transform: scale(1);
+      opacity: 0.5;
     }
-    70% {
-      box-shadow: 0 0 0 7px rgba(232, 254, 84, 0);
-    }
+    70%,
     100% {
-      box-shadow: 0 0 0 0 rgba(232, 254, 84, 0);
+      transform: scale(3.2);
+      opacity: 0;
     }
   }
 
@@ -194,7 +203,7 @@ import HeroBackground from './HeroBackground.astro';
       transform: none;
       animation: none;
     }
-    .status-dot,
+    .status-dot::after,
     .hero-scroll .bar {
       animation: none;
     }

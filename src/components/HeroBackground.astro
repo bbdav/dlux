@@ -72,7 +72,10 @@ const { intensity = 0.6, speed = 1 } = Astro.props;
   const root = document.querySelector<HTMLElement>('[data-hero-bg]');
   const canvas = root?.querySelector<HTMLCanvasElement>('canvas');
 
-  if (root && canvas) {
+  // Deferred to idle so the WebGL setup (context, shader compile, first draws)
+  // doesn't run on the main thread during the LCP window.
+  const init = () => {
+    if (!root || !canvas) return;
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const gl = canvas.getContext('webgl', {
       alpha: false,
@@ -201,12 +204,14 @@ const { intensity = 0.6, speed = 1 } = Astro.props;
         my = 0.42,
         tmx = 0.5,
         tmy = 0.42;
+      // Map against the viewport (canvas is full-bleed and only animates while
+      // the hero is on-screen) — avoids a getBoundingClientRect/layout read on
+      // every pointer move.
       window.addEventListener(
         'pointermove',
         (e) => {
-          const r = canvas.getBoundingClientRect();
-          tmx = (e.clientX - r.left) / r.width;
-          tmy = 1 - (e.clientY - r.top) / r.height;
+          tmx = e.clientX / window.innerWidth;
+          tmy = 1 - e.clientY / window.innerHeight;
         },
         { passive: true }
       );
@@ -296,5 +301,9 @@ const { intensity = 0.6, speed = 1 } = Astro.props;
         }, 150);
       });
     }
-  }
+  };
+
+  const ric = (window as any).requestIdleCallback;
+  if (ric) ric(init, { timeout: 2500 });
+  else setTimeout(init, 200);
 </script>

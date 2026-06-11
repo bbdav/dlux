@@ -10,6 +10,10 @@ export default defineConfig({
   output: 'static',
   trailingSlash: 'ignore',
   integrations: [mdx(), sitemap()],
+  build: {
+    // Inline page CSS into the HTML <head> so it never blocks first render.
+    inlineStylesheets: 'always',
+  },
   vite: {
     // Cast avoids a cosmetic type clash between Astro's bundled Vite and the
     // Vite types @tailwindcss/vite is built against. Runtime is unaffected.
