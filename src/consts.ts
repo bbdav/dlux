@@ -45,32 +45,32 @@ export const TESTIMONIALS = [
   {
     quote:
       'His design thinking at Agility CMS was exceptional. He led UI redesigns, established a unified design system, and improved brand consistency across the board.',
-    name: 'Harmonie Poirier',
-    role: 'Head of Marketing · Agility CMS',
+    name: 'Harmonie Kasko',
+    role: 'Head of Marketing · OrderEase',
   },
   {
     quote:
       'Detail-oriented, tackles complex UX challenges efficiently, explores multiple solutions. Delivers high-quality work even under tight deadlines.',
     name: 'Francisco Martinez',
-    role: 'Head of Product & Design',
+    role: 'Product Design Manager · Nubank',
   },
   {
     quote:
       'A rare skill set across web, mobile, and on-device interfaces. Works well in teams and solo. Resilient and genuinely expert.',
     name: 'Jonathan Theriault',
-    role: 'Director of Technology',
+    role: 'Director of Technology · Insticator',
   },
   {
     quote:
       'Highly skilled with strong problem-solving abilities. Reliable, forward-thinking, a great team player. His commitment to users makes him invaluable.',
     name: 'Melisa Yukselir',
-    role: 'Lead Product Designer',
+    role: 'Lead Product Designer · Ex-RBC',
   },
   {
     quote:
       'His versatility across web, print, and branding elevated our software products. He juggles multiple industries and works seamlessly with teams.',
-    name: 'Maranda Moses',
-    role: 'Digital Product Lead',
+    name: 'Andreea Arion',
+    role: 'Digital Product Lead · BT Group',
   },
 ] as const;
 
