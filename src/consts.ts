@@ -75,10 +75,10 @@ export const TESTIMONIALS = [
 ] as const;
 
 export const SKILLS = [
-  { head: 'Design', items: ['Product Design', 'Design Systems', 'Interaction Design', 'Prototyping', 'Research'] },
-  { head: 'Domains', items: ['B2B SaaS', 'Enterprise', 'iOS / Mobile', 'IoT', 'FinTech'] },
-  { head: 'Tools', items: ['Figma', 'Adobe CS', 'Tailwind', 'Miro · Jira'] },
-  { head: 'Code-adjacent', items: ['React basics', 'Tailwind v4', 'Vite · Astro', 'MDX'] },
+  { head: 'Design', items: ['Product Design', 'Design Systems', 'Information Architecture', 'Interaction Design', 'Workflow Design'] },
+  { head: 'Domains', items: ['B2B SaaS', 'Enterprise', 'Headless CMS', 'IoT', 'Mobile'] },
+  { head: 'Tools', items: ['Figma', 'Storybook', 'Claude Code', 'Cursor', 'v0'] },
+  { head: 'Code', items: ['React + TypeScript', 'Tailwind v4', 'Astro', 'Vercel · Netlify', 'Git · GitHub'] },
 ] as const;
 
 /** Project categories used by the /work filter and collection schema. */
