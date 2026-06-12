@@ -47,6 +47,9 @@
   --color-fg-mid: #a8a6a0;
   /* fg-dim: 4.60:1 on --color-bg — meets WCAG AA for small text. */
   --color-fg-dim: #7e7a72;
+  /* fg-dim sits below AA on the lighter --color-bg-soft panel (4.30:1).
+     fg-onsoft is nudged up to 5.06:1 there while staying muted. */
+  --color-fg-onsoft: #8a867b;
   --color-accent: #e8fe54;
   --color-accent-dim: #c5d946;
 
@@ -93,6 +96,8 @@
   --color-fg: #161618;
   --color-fg-mid: #57554f;
   --color-fg-dim: #6f6c64;
+  /* 4.87:1 on light --color-bg-soft (fg-dim is only 4.32:1 there). */
+  --color-fg-onsoft: #67645c;
   --color-accent: #4a7610;
   --color-accent-dim: #477012;
 }
