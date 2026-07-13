@@ -120,6 +120,8 @@ const { title, description, image, article, hideFooter = false } = Astro.props;
       const addr = user + String.fromCharCode(64) + domain;
       document.querySelectorAll<HTMLAnchorElement>('.email-link').forEach((el) => {
         el.href = 'mailto:' + addr;
+        el.target = '_blank';
+        el.rel = 'noopener noreferrer';
         if (el.hasAttribute('data-show')) {
           const target = el.querySelector<HTMLElement>('.email-text') ?? el;
           target.textContent = addr;

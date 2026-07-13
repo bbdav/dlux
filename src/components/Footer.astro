@@ -16,7 +16,7 @@ const year = new Date().getFullYear();
             <a
               href={s.href}
               data-cursor
-              {...s.href.startsWith('http')
+              {...s.href.startsWith('http') || s.href.endsWith('.pdf')
                 ? { target: '_blank', rel: 'noopener noreferrer' }
                 : {}}
             >
