@@ -77,7 +77,7 @@ export const TESTIMONIALS = [
 export const SKILLS = [
   { head: 'Design', items: ['Product Design', 'Design Systems', 'Information Architecture', 'Interaction Design', 'Workflow Design'] },
   { head: 'Domains', items: ['B2B SaaS', 'Enterprise', 'Headless CMS', 'IoT', 'Mobile'] },
-  { head: 'Tools', items: ['Figma', 'Storybook', 'Claude Code', 'Cursor', 'v0'] },
+  { head: 'Tools', items: ['Figma', 'Storybook', 'Claude Code', 'Cursor', 'Framer'] },
   { head: 'Code', items: ['React + TypeScript', 'Tailwind v4', 'Astro', 'Vercel · Netlify', 'Git · GitHub'] },
 ] as const;
 
