@@ -1,0 +1,70 @@
+---
+title: 'iYurek'
+client: 'Wall Street Business Academy'
+role: 'UI/UX Designer'
+year: 2025
+category: 'SaaS'
+tags: 'Fintech · Mobile & Desktop'
+summary: 'Translated a dense market-intelligence platform from desktop dashboards into a clear mobile experience.'
+outcome: 'Reshaped a dense fintech platform for mobile, untangled its design files, and smoothed onboarding.'
+cover: '../../assets/work/iyurek-cover.png'
+coverAlt: 'The iYurek market-intelligence dashboard: sentiment, currency strength, correlations and charting.'
+order: 8
+draft: false
+services:
+  - 'UI/UX design'
+  - 'Responsive design'
+  - 'Desktop-to-mobile translation'
+  - 'Design file restructure'
+  - 'Onboarding'
+---
+
+import Figure from '../../components/mdx/Figure.astro';
+import Gallery from '../../components/mdx/Gallery.astro';
+import m1 from '../../assets/work/iyurek-mobile-1.png';
+import m2 from '../../assets/work/iyurek-mobile-2.png';
+import m3 from '../../assets/work/iyurek-mobile-3.png';
+
+iYurek sells an idea that is easy to say and hard to design: not more data, better intelligence. The platform pulls market sentiment, currency strength, institutional positioning, correlations, and its own stress indicators into one place for retail investors and professionals. The desktop product was live and powerful. The problem was that its power did not survive the trip to a phone.
+
+## The challenge
+
+Everything iYurek does well, it did well on a wide screen. Dense dashboards, proprietary indicators, and multi-panel layouts assume a lot of room and a lot of attention. On mobile that density turned against the user. Onboarding asked too much too early, screens broke at awkward sizes, and the design files behind it all had grown faster than anyone could keep them organised.
+
+I came in as the UI/UX designer to fix that gap across desktop and mobile, and to leave the design side in a state the team could keep building on.
+
+## Making dense indicators legible
+
+The hardest and most interesting work was the proprietary indicators. A sentiment meter, a fear and greed gauge, currency-strength bars, a stress card that folds together technical signals, money flow, and analyst targets. On desktop each one gets its own real estate. On a phone they have to take turns.
+
+So I designed each indicator to answer its one question first, then reveal the detail on demand. The signal a trader needs at a glance stays on the surface. The supporting evidence sits one tap down. Nothing was removed, it was sequenced.
+
+## Desktop to mobile, not desktop shrunk
+
+Translating the dashboards meant deciding what a phone session is actually for. A desktop user is researching. A mobile user is checking. I reworked the information architecture around that difference so the mobile experience surfaces the live read, the alerts, and the few actions that matter in the moment, and leaves the deep analysis to the larger screen where it belongs.
+
+<Gallery
+  cols={3}
+  items={[
+    { src: m1, alt: 'iYurek mobile dashboard with the sentiment meter, currency strength and economic calendar.' },
+    { src: m2, alt: 'iYurek symbol view with a candlestick chart and the indicator toolbar on mobile.' },
+    { src: m3, alt: 'The iYurek watchlist on mobile, with ratings and live prices.' },
+  ]}
+  caption="The dashboard reflowed for the phone: a live read first, deep analysis a tap away."
+/>
+
+Responsiveness was treated as a design problem, not a breakpoint to patch. Layouts were rebuilt to hold their logic from the widest desktop down to the smallest handset, so nothing collapsed into an afterthought at the sizes in between.
+
+## Smoothing the first run
+
+A market-intelligence tool is intimidating on day one. The old onboarding front-loaded that intimidation. I reshaped the flow to get a user to a first useful view quickly, introducing the heavier concepts as they became relevant rather than all at once. The goal was simple: let someone feel capable before the product asks anything hard of them.
+
+## Putting the design house in order
+
+Behind the product, the design files had sprawled. I restructured them so components, states, and screens were findable and reusable, which cut the friction every future change would otherwise pay. That groundwork does not show up on screen, but it is what lets a small team move without tripping over its own past work.
+
+Throughout, I worked closely with the engineers building across a distributed team and different time zones, so the designs landed in the product the way they were drawn, and flagged where UI testing would catch regressions before users did.
+
+## Outcome
+
+iYurek keeps its depth, and that depth now reaches the phone without overwhelming it. The indicators read clearly on any screen, the first run invites people in instead of warding them off, and the design system underneath is organised enough to grow with the product. For a platform whose whole promise is turning noise into a clear signal, the interface finally makes the same argument the product does.
